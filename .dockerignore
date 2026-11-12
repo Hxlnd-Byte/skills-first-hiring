@@ -1,0 +1,9 @@
+.git
+.env
+tests
+sample-cvs
+docs
+*.md
+*.bat
+__pycache__
+.pytest_cache

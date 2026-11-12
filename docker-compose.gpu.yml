@@ -1,0 +1,10 @@
+# Adds NVIDIA GPU support to the AI model. Used by start.bat.
+services:
+  ollama:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

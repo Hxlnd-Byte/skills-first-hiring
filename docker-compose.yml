@@ -1,0 +1,31 @@
+# Skills-First Hiring: the web app plus a local AI model (Ollama).
+# Start with GPU:  docker compose -f docker-compose.yml -f docker-compose.gpu.yml up -d --build
+# Start CPU-only:  docker compose up -d --build
+name: skills-first-hiring
+
+services:
+  ollama:
+    image: ollama/ollama:0.5.7
+    restart: unless-stopped
+    volumes:
+      - ollama_models:/root/.ollama
+    # No ports published: only the app talks to the model.
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      - ollama
+    environment:
+      OLLAMA_URL: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:7b}
+      DATA_DIR: /data
+    volumes:
+      - app_data:/data
+    ports:
+      # 127.0.0.1 = only this computer can open the app.
+      - "127.0.0.1:${APP_PORT:-8080}:8080"
+
+volumes:
+  ollama_models:
+  app_data:

@@ -1,0 +1,634 @@
+{
+ "role": {
+  "title": "Presales Solutions Consultant",
+  "team": "Enterprise Presales",
+  "altTitles": [
+   "Senior Solutions Consultant",
+   "Presales Consultant",
+   "Solutions Engineer"
+  ],
+  "coreTarget": 4,
+  "niceTarget": 3,
+  "skills": [
+   {
+    "id": "disc",
+    "name": "Discovery & needs analysis",
+    "short": "Discovery & needs",
+    "core": true,
+    "good": "leading discovery with senior customers across different industries"
+   },
+   {
+    "id": "demo",
+    "name": "Solution demos",
+    "short": "Solution demos",
+    "core": true,
+    "good": "tailoring and running demos for complex customer needs"
+   },
+   {
+    "id": "cloud",
+    "name": "Cloud architecture",
+    "short": "Cloud architecture",
+    "core": true,
+    "good": "designing cloud solutions across complex environments or several different industries"
+   },
+   {
+    "id": "exec",
+    "name": "Executive communication",
+    "short": "Executive comms",
+    "core": true,
+    "good": "leading conversations with senior executives about business outcomes"
+   },
+   {
+    "id": "prop",
+    "name": "Commercial proposals",
+    "short": "Proposals",
+    "core": true,
+    "good": "shaping proposals for complex, multi-party deals"
+   },
+   {
+    "id": "data",
+    "name": "Data & AI",
+    "short": "Data & AI",
+    "core": false,
+    "good": "taking data and AI ideas from concept to customer value"
+   },
+   {
+    "id": "arabic",
+    "name": "Arabic",
+    "short": "Arabic",
+    "core": false,
+    "good": "working with customers in Arabic"
+   },
+   {
+    "id": "logi",
+    "name": "Logistics industry",
+    "short": "Logistics",
+    "core": false,
+    "good": "working inside the logistics industry"
+   }
+  ]
+ },
+ "clients": [
+  {
+   "id": "harbour",
+   "name": "Harbourline Freight",
+   "industry": "Freight and trucking",
+   "why": "Largest account. The board wants cost savings from better shipment data.",
+   "color": "#1D4ED8",
+   "logo": null,
+   "survey": {
+    "needs": [
+     "Board-level conversations about cost and savings",
+     "Better visibility of freight and shipment data",
+     "Someone who understands depot operations"
+    ],
+    "wins": [
+     {
+      "what": "Depot automation pilot went live",
+      "why": "We matched the demo to their real depot layout"
+     }
+    ],
+    "challenges": [
+     {
+      "what": "Lost a data visibility deal to a competitor",
+      "why": "No one could talk data & AI with their operations team"
+     }
+    ],
+    "priorities": [
+     "exec",
+     "data",
+     "logi"
+    ]
+   }
+  },
+  {
+   "id": "gulfway",
+   "name": "Gulfway Ports Authority",
+   "industry": "Government port operator",
+   "why": "Ministry-level meetings, mostly in Arabic. Data must stay in the UAE.",
+   "color": "#0F766E",
+   "logo": null,
+   "survey": {
+    "needs": [
+     "Arabic-speaking presales for ministry meetings",
+     "Cloud options that keep data in the UAE"
+    ],
+    "wins": [
+     {
+      "what": "Won a berth-planning tender",
+      "why": "We presented fully in Arabic"
+     }
+    ],
+    "challenges": [
+     {
+      "what": "Slow approvals on the last proposal",
+      "why": "It missed local compliance detail"
+     }
+    ],
+    "priorities": [
+     "arabic",
+     "cloud",
+     "prop"
+    ]
+   }
+  },
+  {
+   "id": "meridian",
+   "name": "Meridian Cold Chain",
+   "industry": "Refrigerated storage and transport",
+   "why": "Wants an AI forecasting case their CFO will accept.",
+   "color": "#B45309",
+   "logo": null,
+   "survey": {
+    "needs": [
+     "Temperature data from trucks and stores in one view",
+     "Help building an AI forecasting business case"
+    ],
+    "wins": [
+     {
+      "what": "Sensor pilot extended to five sites",
+      "why": "Quick proof of value"
+     }
+    ],
+    "challenges": [
+     {
+      "what": "CFO not convinced on return",
+      "why": "The business case was too technical"
+     }
+    ],
+    "priorities": [
+     "data",
+     "exec"
+    ]
+   }
+  },
+  {
+   "id": "sandline",
+   "name": "Sandline Logistics",
+   "industry": "Warehousing and distribution",
+   "why": "Site managers need simple, practical demos.",
+   "color": "#9F1239",
+   "logo": null,
+   "survey": {
+    "needs": [
+     "Someone who knows warehouse operations",
+     "Simple demos for site managers"
+    ],
+    "wins": [
+     {
+      "what": "Renewed for three years",
+      "why": "Strong demos for site teams"
+     }
+    ],
+    "challenges": [
+     {
+      "what": "Churn risk in one region",
+      "why": "Too few visits from presales"
+     }
+    ],
+    "priorities": [
+     "logi",
+     "demo"
+    ]
+   }
+  }
+ ],
+ "team": [
+  {
+   "id": "omar",
+   "name": "Omar Saleh",
+   "title": "Lead solutions consultant",
+   "self": {
+    "disc": 3,
+    "demo": 3,
+    "cloud": 3,
+    "exec": 2,
+    "prop": 3,
+    "data": 1,
+    "arabic": 3,
+    "logi": 1
+   },
+   "mgr": {},
+   "note": "Our go-to for cloud designs. Wants to grow executive presence.",
+   "mentor": {
+    "willing": true,
+    "skills": [
+     "cloud",
+     "prop"
+    ]
+   }
+  },
+  {
+   "id": "lina",
+   "name": "Lina Farouk",
+   "title": "Solutions consultant",
+   "self": {
+    "disc": 3,
+    "demo": 3,
+    "cloud": 3,
+    "exec": 2,
+    "prop": 2,
+    "data": 1,
+    "arabic": 1,
+    "logi": 2
+   },
+   "mgr": {},
+   "note": "Strong demos. Some freight exposure from a previous role.",
+   "mentor": {
+    "willing": true,
+    "skills": [
+     "demo",
+     "cloud"
+    ]
+   }
+  },
+  {
+   "id": "james",
+   "name": "James Carter",
+   "title": "Senior solutions consultant",
+   "self": {
+    "disc": 3,
+    "demo": 3,
+    "cloud": 3,
+    "exec": 3,
+    "prop": 3,
+    "data": 1,
+    "arabic": 1,
+    "logi": 1
+   },
+   "mgr": {},
+   "note": "Runs most board-level meetings today.",
+   "mentor": {
+    "willing": true,
+    "skills": [
+     "exec",
+     "disc"
+    ]
+   }
+  },
+  {
+   "id": "fatima",
+   "name": "Fatima Al Mansoori",
+   "title": "Solutions consultant",
+   "self": {
+    "disc": 3,
+    "demo": 3,
+    "cloud": 2,
+    "exec": 3,
+    "prop": 3,
+    "data": 1,
+    "arabic": 3,
+    "logi": 1
+   },
+   "mgr": {},
+   "note": "Trusted by government customers. Learning cloud design.",
+   "mentor": {
+    "willing": true,
+    "skills": [
+     "arabic",
+     "exec"
+    ]
+   }
+  },
+  {
+   "id": "ravi",
+   "name": "Ravi Iyer",
+   "title": "Solutions consultant",
+   "self": {
+    "disc": 3,
+    "demo": 3,
+    "cloud": 3,
+    "exec": 2,
+    "prop": 3,
+    "data": 3,
+    "arabic": 1,
+    "logi": 1
+   },
+   "mgr": {
+    "data": 2
+   },
+   "note": "Rated himself strong on data & AI after one workshop; not yet customer-facing on it.",
+   "mentor": {
+    "willing": false,
+    "skills": []
+   }
+  }
+ ],
+ "candidates": [
+  {
+   "id": "priya",
+   "name": "Priya Raman",
+   "headline": "Presales consultant, logistics software",
+   "applied": "27 Oct",
+   "status": "review",
+   "location": "Dubai",
+   "ev": {
+    "disc": 85,
+    "demo": 70,
+    "cloud": 55,
+    "exec": 90,
+    "prop": 75,
+    "data": 90,
+    "arabic": 30,
+    "logi": 85
+   },
+   "cv": {
+    "disc": "Ran 30+ discovery workshops with operations leaders at freight firms",
+    "demo": "Built and delivered demo scripts for a route-planning platform",
+    "cloud": "Supported cloud migration bids alongside a solutions architect",
+    "exec": "Presented business cases to CFOs and COOs at three regional carriers",
+    "prop": "Wrote commercial proposals for multi-site freight deals",
+    "data": "Led data & AI proofs of concept on shipment visibility",
+    "arabic": "Lists conversational Arabic",
+    "logi": "Six years across freight, warehousing and ports software"
+   },
+   "jobs": [
+    [
+     "Presales Consultant",
+     "RouteWise Software",
+     "2020 – now"
+    ],
+    [
+     "Business Analyst",
+     "PortLink Systems",
+     "2016 – 2020"
+    ]
+   ],
+   "extras": [
+    "Built data & AI proofs of concept for freight customers",
+    "Worked across three logistics sub-industries"
+   ],
+   "strength": "Your data & AI work with freight customers stood out."
+  },
+  {
+   "id": "amira",
+   "name": "Amira Haddad",
+   "headline": "Solutions consultant, enterprise cloud",
+   "applied": "25 Oct",
+   "status": "review",
+   "location": "Abu Dhabi",
+   "ev": {
+    "disc": 90,
+    "demo": 85,
+    "cloud": 80,
+    "exec": 75,
+    "prop": 85,
+    "data": 40,
+    "arabic": 90,
+    "logi": 30
+   },
+   "cv": {
+    "disc": "Led discovery for banking and government customers",
+    "demo": "Owned the demo environment for a cloud platform team",
+    "cloud": "Designed hybrid cloud solutions for two government entities",
+    "exec": "Briefed IT directors on cloud strategy",
+    "prop": "Wrote and priced 20+ proposals",
+    "data": "Completed an AI fundamentals course",
+    "arabic": "Native Arabic; presents in Arabic and English",
+    "logi": "No logistics customers listed"
+   },
+   "jobs": [
+    [
+     "Solutions Consultant",
+     "Nimbus Cloud MEA",
+     "2019 – now"
+    ],
+    [
+     "Partner Manager",
+     "Falcon IT Distribution",
+     "2015 – 2019"
+    ]
+   ],
+   "extras": [
+    "Ran a regional partner programme with 12 resellers"
+   ],
+   "strength": "Your partner programme experience stood out."
+  },
+  {
+   "id": "daniel",
+   "name": "Daniel Okafor",
+   "headline": "Senior presales engineer",
+   "applied": "24 Oct",
+   "status": "review",
+   "location": "Dubai",
+   "ev": {
+    "disc": 85,
+    "demo": 90,
+    "cloud": 85,
+    "exec": 80,
+    "prop": 80,
+    "data": 30,
+    "arabic": 0,
+    "logi": 20
+   },
+   "cv": {
+    "disc": "Discovery calls with mid-market software buyers",
+    "demo": "Known for polished product demos at large trade events",
+    "cloud": "Certified cloud architect designing for SaaS customers",
+    "exec": "Presents to VP-level stakeholders",
+    "prop": "Writes the technical sections of proposals",
+    "data": "Mentions analytics dashboards",
+    "arabic": "Not listed",
+    "logi": "One retail logistics customer"
+   },
+   "jobs": [
+    [
+     "Senior Presales Engineer",
+     "Brightstack",
+     "2018 – now"
+    ],
+    [
+     "Presales Engineer",
+     "Cloudtree",
+     "2014 – 2018"
+    ]
+   ],
+   "extras": [
+    "Demo storytelling at large events"
+   ],
+   "strength": "Your demo storytelling stood out."
+  },
+  {
+   "id": "lucas",
+   "name": "Lucas Meyer",
+   "headline": "Cloud migration engineer",
+   "applied": "29 Oct",
+   "status": "rejected",
+   "location": "Sharjah",
+   "ev": {
+    "disc": 60,
+    "demo": 55,
+    "cloud": 90,
+    "exec": 45,
+    "prop": 35,
+    "data": 70,
+    "arabic": 0,
+    "logi": 10
+   },
+   "cv": {
+    "disc": "Gathered technical requirements for migrations",
+    "demo": "Occasional internal demos",
+    "cloud": "Led 15 hands-on cloud migrations across manufacturing, healthcare and retail",
+    "exec": "Limited customer-facing leadership",
+    "prop": "Contributed effort estimates to bids",
+    "data": "Built a cloud data platform for a manufacturer",
+    "arabic": "Not listed",
+    "logi": "Not listed"
+   },
+   "jobs": [
+    [
+     "Cloud Migration Engineer",
+     "Skyshift Services",
+     "2019 – now"
+    ],
+    [
+     "Systems Engineer",
+     "Medline IT",
+     "2016 – 2019"
+    ]
+   ],
+   "extras": [
+    "Hands-on migration engineering across three industries"
+   ],
+   "strength": "Your hands-on migration work across three industries stood out."
+  },
+  {
+   "id": "sara",
+   "name": "Sara Nouri",
+   "headline": "Customer service lead, container shipping",
+   "applied": "28 Oct",
+   "status": "rejected",
+   "location": "Dubai",
+   "ev": {
+    "disc": 40,
+    "demo": 50,
+    "cloud": 30,
+    "exec": 60,
+    "prop": 45,
+    "data": 20,
+    "arabic": 95,
+    "logi": 60
+   },
+   "cv": {
+    "disc": "Handled escalations and gathered customer feedback",
+    "demo": "Trained customers on a booking portal",
+    "cloud": "Not listed",
+    "exec": "Presented service reports to regional management",
+    "prop": "Prepared service-level quotes",
+    "data": "Used reporting tools for service metrics",
+    "arabic": "Native Arabic",
+    "logi": "Five years at a container shipping line"
+   },
+   "jobs": [
+    [
+     "Customer Service Lead",
+     "BlueKeel Shipping",
+     "2021 – now"
+    ],
+    [
+     "Customer Service Agent",
+     "BlueKeel Shipping",
+     "2019 – 2021"
+    ]
+   ],
+   "extras": [
+    "Native Arabic speaker",
+    "Five years inside container shipping"
+   ],
+   "strength": "Your native Arabic and five years inside container shipping stood out."
+  }
+ ],
+ "spare": [
+  {
+   "id": "noor",
+   "name": "Noor Khalil",
+   "headline": "Account technologist, ports & terminals",
+   "applied": "1 Nov",
+   "status": "review",
+   "location": "Dubai",
+   "ev": {
+    "disc": 75,
+    "demo": 60,
+    "cloud": 65,
+    "exec": 80,
+    "prop": 70,
+    "data": 55,
+    "arabic": 85,
+    "logi": 90
+   },
+   "cv": {
+    "disc": "Ran requirement workshops with terminal operators",
+    "demo": "Demoed yard-management software to port authorities",
+    "cloud": "Scoped cloud hosting for two terminal systems",
+    "exec": "Quarterly reviews with port CEOs",
+    "prop": "Led proposals for three port tenders",
+    "data": "Introduced dashboards for berth utilisation",
+    "arabic": "Fluent Arabic",
+    "logi": "Eight years across ports, terminals and freight forwarding"
+   },
+   "jobs": [
+    [
+     "Account Technologist",
+     "Quayside Systems",
+     "2018 – now"
+    ],
+    [
+     "Implementation Lead",
+     "TerminalOne",
+     "2014 – 2018"
+    ]
+   ],
+   "extras": [
+    "Worked with port authorities in three countries"
+   ],
+   "strength": "Your work with port authorities stood out."
+  },
+  {
+   "id": "tom",
+   "name": "Tom Becker",
+   "headline": "Presales architect, data platforms",
+   "applied": "2 Nov",
+   "status": "review",
+   "location": "Remote",
+   "ev": {
+    "disc": 70,
+    "demo": 80,
+    "cloud": 75,
+    "exec": 60,
+    "prop": 65,
+    "data": 95,
+    "arabic": 0,
+    "logi": 15
+   },
+   "cv": {
+    "disc": "Discovery for retail and telecom data projects",
+    "demo": "Built live data demos on customer samples",
+    "cloud": "Designed cloud data platforms",
+    "exec": "Some CIO-level briefings",
+    "prop": "Supports proposal technical sections",
+    "data": "Ten AI and analytics projects taken to production",
+    "arabic": "Not listed",
+    "logi": "Not listed"
+   },
+   "jobs": [
+    [
+     "Presales Architect",
+     "Datafold Analytics",
+     "2017 – now"
+    ],
+    [
+     "Data Engineer",
+     "Telcom Insights",
+     "2013 – 2017"
+    ]
+   ],
+   "extras": [
+    "Took ten AI and analytics projects into production"
+   ],
+   "strength": "Your production AI experience stood out."
+  }
+ ],
+ "letters": {},
+ "plan": null,
+ "mentorships": []
+}

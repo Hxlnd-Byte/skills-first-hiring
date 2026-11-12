@@ -1,0 +1,20 @@
+MARCO BIANCHI
+Solutions Architect, supply chain software · Dubai, UAE · [contact details removed for the sample]
+
+SUMMARY
+Customer-facing solutions architect who helps logistics and retail companies modernise their warehouse and transport systems.
+
+EXPERIENCE
+Solutions Architect, Freightly (2021 - present)
+- Led discovery workshops with operations directors at 12 logistics companies across freight, retail and healthcare supply chains
+- Designed cloud architectures on Azure for multi-site warehouse customers, including data residency in the UAE
+- Built tailored demos of warehouse dashboards for site managers and finance teams
+- Built a demand forecasting proof of concept with machine learning for a cold-chain customer
+- Ran a cross-industry user group for 40 customers
+
+Implementation Consultant, StackWare Systems (2017 - 2021)
+- Rolled out warehouse management software at distribution centres in Italy and the Gulf
+- Trained customer teams and wrote technical sections of tenders
+
+LANGUAGES
+English, Italian

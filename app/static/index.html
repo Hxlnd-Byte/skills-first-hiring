@@ -1,0 +1,781 @@
+<title>Skills-First Hiring</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one working app. Header + step tabs, then one view at a time. Calm neutral surfaces, one teal accent,
+   light theme only (white background); traffic-light data colours (dark = core, pale = complementary), purple = something new, pink = team gap. */
+:root {
+  --bg: #FFFFFF; --surface: #FFFFFF; --surface-2: #EEF2F3; --border: #DFE4E7; --fg: #14191D; --muted: #4A5560;
+  --accent: #0F5F59; --accent-soft: #E1F0EE; --on-accent: #FFFFFF;
+  --purple: #7E22CE; --purple-soft: #F3E8FF; --purple-fg: #6B21A8; --purple-line: #E3CCFB;
+  --indigo-soft: #E0E7FF; --indigo-fg: #3730A3;
+  --pink: #F9A8D4; --pink-line: #DB2777; --pink-soft: #FCE7F3; --pink-soft-line: #EC4899; --pink-fg: #BE185D; --pink-bg: #FDF2F8;
+  --ok-soft: #DCFCE7; --ok-fg: #14532D; --warn-soft: #FEF3C7; --warn-fg: #78350F; --bad-soft: #FEE2E2; --bad-fg: #991B1B;
+  --role-line: #6B7280; --cand: #0F5F59; --cand-fill: rgba(15,95,89,0.26); --mask: #FFFFFF;
+  --grid: rgba(20,25,29,0.16); --paper: #FFFFFF;
+  color-scheme: light;
+  --font: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--font); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1240px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header.top { background: var(--surface); border-bottom: 1px solid var(--border); }
+header.top .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 16px; }
+.brand i { width: 26px; height: 26px; border-radius: 8px; background: var(--accent); display: block; }
+.proto-tag { font-size: 12px; font-weight: 600; color: var(--muted); padding: 4px 10px; border: 1px dashed var(--border); border-radius: 999px; }
+h1, h2, h3 { text-wrap: balance; margin: 0; }
+h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.01em; }
+h2 { font-size: 17px; font-weight: 600; }
+h3 { font-size: 15px; font-weight: 600; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.xs { font-size: 12px; }
+main.wrap { padding-block: 24px 48px; display: flex; flex-direction: column; gap: 20px; }
+.rolehead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+.rolehead > div { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rolehead > .btnrow { flex-direction: row; align-items: center; gap: 8px; }
+.rolehead > .clientstrip { display: flex; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 8px; }
+nav.steps { display: flex; gap: 2px; overflow-x: auto; border-bottom: 1px solid var(--border); }
+nav.steps a { display: flex; align-items: center; gap: 8px; padding: 12px 14px; white-space: nowrap; text-decoration: none; color: var(--muted); font-weight: 500; border-bottom: 2px solid transparent; }
+nav.steps a b { display: inline-flex; width: 20px; height: 20px; border-radius: 999px; background: var(--surface-2); color: var(--muted); font-size: 11px; align-items: center; justify-content: center; }
+nav.steps a[aria-current="page"] { color: var(--fg); font-weight: 600; border-bottom-color: var(--accent); }
+nav.steps a[aria-current="page"] b { background: var(--accent); color: var(--on-accent); }
+nav.steps .sep { width: 1px; background: var(--border); margin: 10px 6px; flex: none; }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; }
+.grow { flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.side { flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 20px; }
+.btn { font: 600 14px var(--font); padding: 10px 16px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); color: var(--fg); cursor: pointer; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
+.btn.ghost { background: transparent; }
+.btn.done { background: var(--ok-soft); border-color: transparent; color: var(--ok-fg); }
+.btn.sm { min-height: 36px; padding: 6px 12px; font-size: 13px; }
+.btn[disabled] { opacity: 0.55; cursor: default; }
+.btnrow { display: flex; flex-wrap: wrap; gap: 8px; }
+.seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 12px; background: var(--surface-2); flex-wrap: wrap; }
+.seg button { font: 500 14px var(--font); padding: 8px 14px; border: none; border-radius: 9px; background: transparent; color: var(--muted); cursor: pointer; min-height: 40px; display: inline-flex; align-items: center; gap: 8px; }
+.seg button[aria-pressed="true"] { background: var(--surface); color: var(--fg); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,0.12); }
+.pill { display: inline-flex; align-items: center; gap: 6px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.pill.new, .pill.gap { background: var(--purple-soft); color: var(--purple-fg); }
+.pill.cust { background: var(--indigo-soft); color: var(--indigo-fg); }
+.pill.review { background: var(--surface-2); color: var(--muted); }
+.pill.interview { background: var(--accent-soft); color: var(--accent); }
+.pill.rejected, .pill.bad { background: var(--bad-soft); color: var(--bad-fg); }
+.pill.hired, .pill.ok { background: var(--ok-soft); color: var(--ok-fg); }
+.pill.warn { background: var(--warn-soft); color: var(--warn-fg); }
+.legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13px; color: var(--muted); }
+.legend .lab { font-weight: 600; color: var(--fg); min-width: 120px; }
+.sw { width: 14px; height: 14px; border-radius: 4px; display: inline-block; border: 1px solid rgba(0,0,0,0.08); vertical-align: middle; }
+.legend span.k { display: inline-flex; align-items: center; gap: 6px; }
+.break { flex-basis: 100%; height: 0; }
+
+.cell { height: 42px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; text-align: center; padding: 0 4px; }
+.c-strong { background: #15803D; color: #FFFFFF; }
+.c-partial { background: #F59E0B; color: #451A03; }
+.c-none { background: #DC2626; color: #FFFFFF; }
+.n-strong { background: #BBF7D0; color: #14532D; border: 1px solid rgba(0,0,0,0.08); }
+.n-partial { background: #FEF3C7; color: #78350F; border: 1px solid rgba(0,0,0,0.08); }
+.n-none { background: #FECACA; color: #7F1D1D; border: 1px solid rgba(0,0,0,0.08); }
+
+.scroll { overflow-x: auto; }
+.grid { min-width: 1060px; }
+.grow-row { display: grid; grid-template-columns: 200px repeat(5, minmax(78px, 1fr)) 10px repeat(3, minmax(78px, 1fr)) 170px 104px; gap: 6px; align-items: center; padding: 8px 14px; }
+.grow-row.head { align-items: end; font-size: 12px; font-weight: 600; color: var(--muted); padding-top: 6px; }
+.grow-row.groups { font-size: 12px; font-weight: 600; padding-bottom: 0; }
+.grp { padding-bottom: 6px; border-bottom: 2px solid #15803D; color: var(--fg); }
+.grp.nice { border-bottom-color: #86EFAC; }
+.grow-row.cand { border-top: 1px solid var(--border); cursor: pointer; }
+.grow-row.cand:hover { background: var(--surface-2); }
+.hcell { display: flex; flex-direction: column; gap: 4px; }
+.hcell .tags { display: flex; gap: 4px; flex-wrap: wrap; }
+.hcell .tags .pill { font-size: 10px; padding: 1px 6px; }
+.cname { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.cname button { all: unset; cursor: pointer; font-weight: 600; font-size: 14px; color: var(--fg); }
+.cname button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cname a { font-size: 12px; font-weight: 600; align-self: flex-start; padding: 2px 0; }
+.newtxt { font-size: 12px; line-height: 1.4; color: var(--purple-fg); }
+
+.radars { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+.rpanel { border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.rpanel svg { width: 100%; height: auto; display: block; }
+svg .r-grid { fill: none; stroke: var(--grid); stroke-width: 1; }
+svg .r-role { fill: none; stroke: var(--role-line); stroke-width: 2; stroke-dasharray: 6 5; }
+svg .r-cand { fill: var(--cand-fill); stroke: var(--cand); stroke-width: 2.5; stroke-linejoin: round; }
+svg .r-dot { fill: var(--cand); }
+svg .r-dot.beyond { fill: var(--purple); }
+svg .r-need-core { fill: var(--pink); stroke: var(--pink-line); stroke-width: 1.5; stroke-dasharray: 5 4; }
+svg .r-need-nice { fill: var(--pink-soft); stroke: var(--pink-soft-line); stroke-width: 1.5; stroke-dasharray: 5 4; }
+svg .r-mask { fill: var(--mask); stroke: none; }
+svg .r-team { fill: #CBD5E1; stroke: #475569; stroke-width: 2; stroke-linejoin: round; }
+svg .r-lab { fill: var(--fg); font: 15px var(--font); }
+svg .r-sub { font: 600 13px var(--font); }
+svg .t-strong { fill: #15803D; } svg .t-partial { fill: #B45309; } svg .t-none { fill: #DC2626; }
+svg .t-short { fill: var(--pink-fg); } svg .t-met { fill: var(--muted); }
+svg .r-num { fill: var(--muted); font: 600 10px var(--font); paint-order: stroke; stroke: var(--surface); stroke-width: 3; }
+
+.callout { padding: 12px 14px; border-radius: 10px; font-size: 14px; line-height: 1.5; }
+.callout.pink { background: var(--pink-bg); color: var(--pink-fg); }
+.callout.info { background: var(--surface-2); color: var(--fg); }
+.callout.ok { background: var(--ok-soft); color: var(--ok-fg); }
+.card.purple { background: var(--purple-soft); border-color: var(--purple-line); }
+.card.purple h2, .card.purple h3 { color: var(--purple-fg); }
+ul.clean { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+dl.kv { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 13px; }
+dl.kv dt { color: var(--muted); }
+dl.kv dd { margin: 0; font-weight: 600; text-align: right; }
+.evlist { display: flex; flex-direction: column; gap: 6px; }
+.evitem { display: grid; grid-template-columns: 170px 92px 1fr; gap: 10px; align-items: center; font-size: 13px; }
+.evitem .cell { height: 30px; }
+
+label.f { display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+input[type="text"], input[type="number"], select, textarea { font: 400 14px var(--font); color: var(--fg); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; min-height: 44px; width: 100%; }
+textarea { resize: vertical; line-height: 1.5; }
+.fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.check { display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 40px; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--accent); margin: 0; flex: none; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); font-size: 12px; font-weight: 600; cursor: pointer; min-height: 32px; }
+.chip input { width: 14px; height: 14px; margin: 0; accent-color: var(--purple); }
+.chip.on { background: var(--purple-soft); border-color: var(--purple-line); color: var(--purple-fg); }
+
+/* clients */
+.clients { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.client { border: 1px solid var(--border); border-radius: 12px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
+.client .top { display: flex; align-items: center; gap: 12px; }
+.logo { width: 52px; height: 52px; border-radius: 12px; flex: none; overflow: hidden; display: block; background: var(--surface-2); }
+.logo img { width: 100%; height: 100%; object-fit: contain; display: block; }
+.logo.s { width: 28px; height: 28px; border-radius: 7px; }
+.filebtn { position: relative; overflow: hidden; }
+.filebtn input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+
+.members { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
+.mrow { display: grid; grid-template-columns: 1fr 76px 118px; gap: 8px; align-items: center; font-size: 13px; }
+.mrow select { min-height: 36px; padding: 6px 8px; font-size: 13px; }
+.mrow.adj select { border-color: var(--purple); }
+.selfp { font-size: 12px; color: var(--muted); }
+.mentor { border-top: 1px solid var(--border); padding-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+.rlist { flex: 1 1 240px; max-width: 320px; }
+.rlist button.item { all: unset; display: flex; flex-direction: column; gap: 4px; padding: 12px; border-radius: 10px; cursor: pointer; }
+.rlist button.item[aria-current="true"] { background: var(--accent-soft); }
+.rlist button.item:focus-visible { outline: 2px solid var(--accent); }
+.letter { padding: 18px 20px; border-radius: 12px; border: 1px solid var(--border); background: var(--surface-2); display: flex; flex-direction: column; gap: 10px; font-size: 15px; line-height: 1.6; }
+.checks { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; padding: 0; margin: 0; }
+.cmpgrid { min-width: 600px; display: flex; flex-direction: column; gap: 6px; }
+.cmprow { display: grid; grid-template-columns: 210px repeat(4, minmax(84px, 1fr)); gap: 6px; align-items: center; padding: 4px 6px; border-radius: 10px; }
+.cmprow.reason { box-shadow: inset 0 0 0 2px var(--fg); }
+.needcell { border: 1.5px dashed var(--role-line); color: var(--fg); background: transparent; }
+
+.plan { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+.plan textarea { min-height: 64px; font-size: 13px; }
+.phase h3 { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+
+/* CV document */
+.cvdoc { background: var(--paper); border: 1px solid var(--border); border-radius: 6px; max-width: 760px; width: 100%; margin: 0 auto; padding: 40px 44px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 2px 10px rgba(0,0,0,0.06); }
+.cvdoc h1 { font-size: 28px; }
+.cvdoc h2 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--border); padding-bottom: 6px; }
+.cvdoc ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+
+.foot { font-size: 12px; color: var(--muted); }
+.drop { border: 2px dashed var(--border); border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start; }
+@media (max-width: 520px) { .evitem { grid-template-columns: 1fr 86px; } .evitem span.q { grid-column: 1 / -1; } .mrow { grid-template-columns: 1fr 108px; } .mrow .selfp { display: none; } .cvdoc { padding: 24px 20px; } }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<header class="top"><div class="wrap">
+  <div class="brand"><i aria-hidden="true"></i>[PRODUCT NAME]</div>
+  <div class="btnrow" style="align-items:center">
+    <span class="proto-tag" id="aiStatus" role="status">Checking the AI model…</span>
+    <button class="btn ghost" type="button" data-act="reset" id="resetBtn">Reset sample data</button>
+  </div>
+</div></header>
+<main class="wrap" id="app"><p class="muted">Loading…</p></main>
+
+<script>
+(function () {
+'use strict';
+var KEY = 'skillsfirst-proto-v2';
+
+/* ---------- data lives in the local server (SQLite), not in the browser ---------- */
+var S = null;
+function api(path, opts) {
+  return fetch(path, opts).then(function (r) {
+    if (!r.ok) return r.json().catch(function () { return {}; }).then(function (j) { throw new Error(j.detail || ('Request failed (' + r.status + ')')); });
+    return r.json();
+  });
+}
+var saveTimer = null;
+function save() { clearTimeout(saveTimer); saveTimer = setTimeout(flushSave, 400); }
+function flushSave() {
+  clearTimeout(saveTimer);
+  if (!S) return Promise.resolve();
+  return api('/api/state', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(S) })
+    .catch(function (e) { alertMsg('Could not save: ' + e.message); });
+}
+function reloadState() { return api('/api/state').then(function (s) { S = s; if (!S.mentorships) S.mentorships = []; render(); }); }
+var AI = { ready: false };
+function pollAI() {
+  api('/api/health').then(function (h) {
+    var was = AI.ready; AI = h.ai;
+    var el = document.getElementById('aiStatus');
+    if (AI.ready) el.textContent = 'AI ready · ' + AI.model;
+    else if (AI.pulling) el.textContent = 'Downloading AI model ' + (AI.progress || '') + ' (first start only)';
+    else el.textContent = 'Waiting for the AI model…';
+    if (AI.ready !== was && S) render();
+    setTimeout(pollAI, AI.ready ? 30000 : 4000);
+  }).catch(function () { document.getElementById('aiStatus').textContent = 'App server not reachable'; setTimeout(pollAI, 5000); });
+}
+function cvHref(c) { return c.file ? '/api/cvs/' + c.id + '/file' : '#cv-' + c.id; }
+function cvTarget(c) { return c.file ? ' target="_blank" rel="noopener"' : ''; }
+
+/* ---------- helpers ---------- */
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function skills() { return S.role.skills; }
+function core() { return skills().filter(function (k) { return k.core; }); }
+function nice() { return skills().filter(function (k) { return !k.core; }); }
+function skill(id) { return skills().find(function (k) { return k.id === id; }); }
+function cand(id) { return S.candidates.find(function (c) { return c.id === id; }); }
+function client(id) { return S.clients.find(function (c) { return c.id === id; }); }
+function lvl(v) { return v >= 70 ? 'strong' : v >= 40 ? 'partial' : 'none'; }
+var LVL = { strong: 'Strong', partial: 'Partial', none: 'No evidence' };
+function cellClass(v, isCore) { return (isCore ? 'c-' : 'n-') + lvl(v); }
+function rating(m, id) { return m.mgr[id] != null ? m.mgr[id] : m.self[id]; }
+function teamCount(id) { return S.team.filter(function (m) { return rating(m, id) === 3; }).length; }
+function need(k) { return k.core ? S.role.coreTarget : S.role.niceTarget; }
+function isGap(k) { return teamCount(k.id) < need(k); }
+function priorityClients(id) { return S.clients.filter(function (c) { return c.survey.priorities.indexOf(id) >= 0; }); }
+function isPriority(id) { return priorityClients(id).length > 0; }
+function joinList(xs) { return xs.length < 2 ? xs.join('') : xs.slice(0, -1).join(', ') + ' and ' + xs[xs.length - 1]; }
+function first(n) { return n.split(' ')[0]; }
+function low(k) { var n = k.name; return /^(Arabic|English|French)/.test(n) ? n : n.charAt(0).toLowerCase() + n.slice(1); }
+function fills(c) { return skills().filter(function (k) { return isGap(k) && c.ev[k.id] >= 70; }); }
+function coreScore(c) { return core().reduce(function (a, k) { return a + c.ev[k.id]; }, 0); }
+function mentorsFor(id) { return S.team.filter(function (m) { return m.mentor.willing && m.mentor.skills.indexOf(id) >= 0; }); }
+function notStrongIn(id) { return S.team.filter(function (m) { return rating(m, id) < 3; }); }
+function groupName(k) { return k.core ? 'Core' : 'Complementary'; }
+var STATUS = { review: 'In review', interview: 'Interview', rejected: 'Not progressing', hired: 'Hired' };
+function initials(n) { return n.split(/\s+/).filter(Boolean).slice(0, 2).map(function (w) { return w[0].toUpperCase(); }).join(''); }
+function logo(c, small) {
+  var cls = 'logo' + (small ? ' s' : '');
+  if (c.logo) return '<span class="' + cls + '"><img src="' + esc(c.logo) + '" alt="' + esc(c.name) + ' logo"></span>';
+  return '<svg class="' + cls + '" viewBox="0 0 52 52" role="img" aria-label="' + esc(c.name) + ' logo"><rect width="52" height="52" rx="12" fill="' + esc(c.color) + '"></rect><path d="M8 40 L22 26 L30 33 L44 18" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path><text x="26" y="32" text-anchor="middle" fill="#FFFFFF" font-family="Inter, system-ui, sans-serif" font-size="17" font-weight="700">' + esc(initials(c.name)) + '</text></svg>';
+}
+
+/* ---------- routing ---------- */
+var VIEWS = [
+  ['role', '1', 'Role'], ['candidates', '2', 'Candidates'], ['team', '3', 'Team'], ['insights', '4', 'Customer insights'], null,
+  ['rejections', '5', 'Rejection review'], ['plan', '6', 'Onboarding']
+];
+var ui = { radarView: 'role', rejSel: null, sort: 'alpha', uploadOpen: false, client: null };
+function route() { var h = (location.hash || '').replace('#', ''); return h || 'role'; }
+function go(h) { if (location.hash === '#' + h) render(); else location.hash = h; }
+window.addEventListener('hashchange', function () { render(); window.scrollTo(0, 0); });
+
+function navHTML(cur) {
+  var active = (cur.indexOf('c-') === 0 || cur.indexOf('cv-') === 0) ? 'candidates' : cur;
+  return '<nav class="steps" aria-label="Hiring steps">' + VIEWS.map(function (v) {
+    if (!v) return '<span class="sep" aria-hidden="true"></span>';
+    return '<a href="#' + v[0] + '"' + (active === v[0] ? ' aria-current="page"' : '') + '><b>' + v[1] + '</b>' + v[2] + '</a>';
+  }).join('') + '</nav>';
+}
+function headHTML() {
+  return '<div class="rolehead"><div><span class="small muted">Roles / ' + esc(S.role.title) + '</span><h1>' + esc(S.role.title) + '</h1>' +
+    '<span class="small muted">Also known as: ' + esc(S.role.altTitles.filter(Boolean).join(', ')) + ' · Team: ' + esc(S.role.team) + ' (' + S.team.length + ' people + this role) · ' + S.candidates.length + ' candidates</span></div>' +
+    '<div class="clientstrip" aria-label="Clients this person will work with">' + S.clients.map(function (c) { return '<span title="' + esc(c.name) + '">' + logo(c, true) + '</span>'; }).join('') + '<button class="btn primary" type="button" data-act="upload" style="margin-left:8px">Add CVs</button></div></div>';
+}
+
+/* ---------- radar ---------- */
+function radar(list, mode, c) {
+  var n = list.length, cx = 160, cy = 150, R = 110;
+  function ang(i) { return -Math.PI / 2 + i * 2 * Math.PI / n; }
+  function P(i, f) { return [cx + Math.cos(ang(i)) * R * f, cy + Math.sin(ang(i)) * R * f]; }
+  function poly(vals, max) { return vals.map(function (v, i) { var p = P(i, Math.max(0, Math.min(v, max)) / max); return p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' '); }
+  var out = [], isCore = list[0].core, max = mode === 'teamonly' ? S.team.length : S.team.length + 1;
+  function withC(k) { return Math.min(max, teamCount(k.id) + (c.ev[k.id] >= 70 ? 1 : 0)); }
+  if (mode === 'role') {
+    [0.25, 0.5, 0.75, 1].forEach(function (f) { out.push('<circle class="r-grid" cx="' + cx + '" cy="' + cy + '" r="' + (R * f) + '"></circle>'); });
+    list.forEach(function (k, i) { var p = P(i, 1); out.push('<line class="r-grid" x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '"></line>'); });
+    out.push('<polygon class="r-role" points="' + poly(list.map(function (k) { return k.core ? 80 : 50; }), 100) + '"></polygon>');
+    out.push('<polygon class="r-cand" points="' + poly(list.map(function (k) { return c.ev[k.id]; }), 100) + '"></polygon>');
+    list.forEach(function (k, i) { var v = c.ev[k.id]; var p = P(i, v / 100); var beyond = v >= (k.core ? 80 : 50) + 10; out.push('<circle class="r-dot' + (beyond ? ' beyond' : '') + '" cx="' + p[0].toFixed(1) + '" cy="' + p[1].toFixed(1) + '" r="' + (beyond ? 5.5 : 4) + '"></circle>'); });
+  } else {
+    out.push('<polygon class="' + (isCore ? 'r-need-core' : 'r-need-nice') + '" points="' + poly(list.map(need), max) + '"></polygon>');
+    if (mode === 'teamonly') out.push('<polygon class="r-team" points="' + poly(list.map(function (k) { return teamCount(k.id); }), max) + '"></polygon>');
+    else out.push('<polygon class="r-mask" points="' + poly(list.map(withC), max) + '"></polygon>');
+    for (var r = 1; r <= max; r++) out.push('<circle class="r-grid" cx="' + cx + '" cy="' + cy + '" r="' + (R * r / max).toFixed(2) + '"></circle>');
+    list.forEach(function (k, i) { var p = P(i, 1); out.push('<line class="r-grid" x1="' + cx + '" y1="' + cy + '" x2="' + p[0].toFixed(1) + '" y2="' + p[1].toFixed(1) + '"></line>'); });
+    for (var q = 1; q <= max; q++) out.push('<text class="r-num" x="154" y="' + (cy - R * q / max + 4).toFixed(1) + '" text-anchor="end">' + q + '</text>');
+  }
+  list.forEach(function (k, i) {
+    var a = ang(i), p = P(i, 128 / R), cs = Math.cos(a), sn = Math.sin(a);
+    var anchor = cs > 0.3 ? 'start' : cs < -0.3 ? 'end' : 'middle';
+    var y1, y2;
+    if (sn < -0.9) { y1 = p[1] - 18; y2 = p[1] - 2; } else if (sn > 0.3) { y1 = p[1] + 10; y2 = p[1] + 26; } else { y1 = p[1] - 4; y2 = p[1] + 12; }
+    var sub, cls;
+    if (mode === 'role') { var l = lvl(c.ev[k.id]); sub = LVL[l]; cls = 't-' + l; }
+    else if (mode === 'teamonly') { var tc = teamCount(k.id); sub = tc + ' of ' + need(k) + (tc < need(k) ? ' needed' : ' · met'); cls = tc < need(k) ? 't-short' : 't-met'; }
+    else { var short = need(k) - withC(k); sub = short > 0 ? short + ' short · need ' + need(k) : 'Met'; cls = short > 0 ? 't-short' : 't-met'; }
+    out.push('<text class="r-lab" x="' + p[0].toFixed(1) + '" y="' + y1.toFixed(1) + '" text-anchor="' + anchor + '">' + esc(k.short) + '</text>');
+    out.push('<text class="r-sub ' + cls + '" x="' + p[0].toFixed(1) + '" y="' + y2.toFixed(1) + '" text-anchor="' + anchor + '">' + esc(sub) + '</text>');
+  });
+  var label = (isCore ? 'Core skills' : 'Complementary skills') + (mode === 'role' ? ': ' + list.map(function (k) { return k.short + ' ' + LVL[lvl(c.ev[k.id])]; }).join(', ') : ' team gap');
+  return '<svg viewBox="-130 -20 540 320" role="img" aria-label="' + esc(label) + '">' + out.join('') + '</svg>';
+}
+
+/* ---------- 1. Role ---------- */
+function viewRole() {
+  function skillRow(k) { return '<label class="f" for="sk-' + k.id + '">' + groupName(k) + ' skill<input type="text" id="sk-' + k.id + '" data-skill="' + k.id + '" value="' + esc(k.name) + '"></label>'; }
+  var clientCards = S.clients.map(function (c, i) {
+    return '<div class="client"><div class="top">' + logo(c) + '<div style="display:flex;flex-direction:column;gap:2px;min-width:0"><strong>' + esc(c.name) + '</strong><span class="xs muted">' + esc(c.industry) + '</span></div></div>' +
+      '<label class="f" for="cl-n-' + c.id + '">Client name<input type="text" id="cl-n-' + c.id + '" data-client="' + c.id + ':name" value="' + esc(c.name) + '"></label>' +
+      '<label class="f" for="cl-w-' + c.id + '">Why this role matters here<textarea id="cl-w-' + c.id + '" rows="2" data-client="' + c.id + ':why">' + esc(c.why) + '</textarea></label>' +
+      '<div class="btnrow"><label class="btn sm filebtn" for="cl-l-' + c.id + '">' + (c.logo ? 'Change logo' : 'Upload logo') + '<input type="file" id="cl-l-' + c.id + '" accept="image/*" data-logo="' + c.id + '"></label>' +
+      (S.clients.length > 3 ? '<button class="btn sm ghost" type="button" data-rmclient="' + c.id + '">Remove</button>' : '') + '</div></div>';
+  }).join('');
+  return headHTML() + navHTML('role') +
+    '<div class="rolehead"><div><h2>Define the role</h2><span class="small muted">What this person will do, who they will do it for, and the skills that matter.</span></div></div>' +
+    '<section class="card"><div class="fgrid"><label class="f" for="r-title">Role title<input type="text" id="r-title" data-role="title" value="' + esc(S.role.title) + '"></label>' +
+    '<label class="f" for="r-team">Team<input type="text" id="r-team" data-role="team" value="' + esc(S.role.team) + '"></label></div>' +
+    '<div style="display:flex;flex-direction:column;gap:6px"><span class="small muted" style="font-weight:600">Other titles the industry uses for this role (2–3)</span><div class="fgrid">' +
+    [0, 1, 2].map(function (i) { return '<input type="text" aria-label="Other title ' + (i + 1) + '" id="alt-' + i + '" data-alt="' + i + '" value="' + esc(S.role.altTitles[i] || '') + '"' + (i === 2 ? ' placeholder="Optional"' : '') + '>'; }).join('') +
+    '</div><span class="xs muted">These help candidates recognise the role, and help the system read CVs that use a different title.</span></div></section>' +
+    '<section class="card"><div class="rolehead" style="align-items:center"><div><h2>Top clients this person will work with</h2><span class="small muted">A reminder of who this hire is for. ' + S.clients.length + ' of 5.</span></div>' +
+    (S.clients.length < 5 ? '<button class="btn" type="button" data-act="addClient">Add a client</button>' : '') + '</div>' +
+    '<div class="clients">' + clientCards + '</div><p class="xs muted">Sample clients and logos are fictional. Each company uploads its own clients’ logos.</p></section>' +
+    '<div class="row"><section class="card grow" style="flex-basis:420px"><h3>Core skills <span class="small muted">· must have</span></h3><div class="fgrid">' + core().map(skillRow).join('') + '</div></section>' +
+    '<section class="card side"><h3>Complementary skills <span class="small muted">· add to the team</span></h3><div class="fgrid" style="grid-template-columns:1fr">' + nice().map(skillRow).join('') + '</div></section></div>';
+}
+
+/* ---------- 2. Candidates ---------- */
+function viewCandidates() {
+  var list = S.candidates.slice();
+  if (ui.sort === 'alpha') list.sort(function (a, b) { return a.name.localeCompare(b.name); });
+  if (ui.sort === 'fills') list.sort(function (a, b) { return fills(b).length - fills(a).length || coreScore(b) - coreScore(a); });
+  if (ui.sort === 'core') list.sort(function (a, b) { return coreScore(b) - coreScore(a); });
+  function header(k) {
+    var tags = '';
+    if (isGap(k)) tags += '<span class="pill gap">Team gap</span>';
+    var pc = priorityClients(k.id);
+    if (pc.length) tags += '<span class="pill cust" title="Priority for ' + esc(pc.map(function (c) { return c.name; }).join(', ')) + '">Client ×' + pc.length + '</span>';
+    return '<div class="hcell" title="' + esc(k.name) + '">' + (tags ? '<div class="tags">' + tags + '</div>' : '') + '<span>' + esc(k.short) + '</span></div>';
+  }
+  function cells(c, ks) { return ks.map(function (k) { return '<div class="cell ' + cellClass(c.ev[k.id], k.core) + '">' + LVL[lvl(c.ev[k.id])] + '</div>'; }).join(''); }
+  var rows = list.map(function (c) {
+    var f = fills(c).map(function (k) { return k.short; });
+    var txt = f.length ? 'Fills team gap: ' + joinList(f) : (c.extras[0] || '');
+    return '<div class="grow-row cand" data-open="' + c.id + '">' +
+      '<div class="cname"><button type="button" data-open="' + c.id + '">' + esc(c.name) + '</button><span class="xs muted">' + esc(c.headline) + '</span><a href="' + cvHref(c) + '"' + cvTarget(c) + '>View CV</a></div>' +
+      cells(c, core()) + '<div></div>' + cells(c, nice()) +
+      '<div class="newtxt">' + esc(txt) + '</div>' +
+      '<div><span class="pill ' + c.status + '">' + STATUS[c.status] + '</span></div></div>';
+  }).join('');
+  var upload = ui.uploadOpen ? '<div class="drop" id="drop"><h3>Add CVs</h3>' +
+    '<p class="small muted">PDF, Word (.docx) or text files, up to 10 MB each. The local AI reads each CV and scores the skills; allow about a minute per CV. Nothing leaves this computer.</p>' +
+    (AI.ready ? '' : '<p class="small" style="color:var(--bad-fg)">The AI model is not ready yet (see the status at the top). You can still add the sample CVs.</p>') +
+    '<label class="btn primary filebtn" for="cvFiles">' + (ui.busy === 'upload' ? 'Reading CVs…' : 'Choose CV files') + '<input type="file" id="cvFiles" multiple accept=".pdf,.docx,.txt" data-cvfiles="1"' + (ui.busy === 'upload' || !AI.ready ? ' disabled' : '') + '></label>' +
+    '<span class="xs muted">Or drag files onto this box.</span>' + (ui.uploadMsg ? '<div class="callout info small" role="status">' + ui.uploadMsg + '</div>' : '') +
+    (S.spare.length ? '<span class="small muted" style="font-weight:600">Sample CVs (fictional)</span><div class="btnrow">' + S.spare.map(function (c) { return '<button class="btn" type="button" data-add="' + c.id + '">Add ' + esc(c.name) + '</button>'; }).join('') + '</div>' : '') +
+    '<button class="btn ghost" type="button" data-act="closeUpload">Close</button></div>' : '';
+  return headHTML() + navHTML('candidates') +
+    '<div class="rolehead"><div><h2>Candidates against the role</h2><span class="small muted">Colours show how much evidence each CV gives for each skill. Select a name for the detail, or open the CV.</span></div>' +
+    '<div class="btnrow" style="align-items:center"><label class="small muted" for="sortSel">Order</label><select id="sortSel" data-bind="sort" style="width:auto"><option value="alpha"' + (ui.sort === 'alpha' ? ' selected' : '') + '>A–Z by first name</option><option value="fills"' + (ui.sort === 'fills' ? ' selected' : '') + '>Most team gaps filled</option><option value="core"' + (ui.sort === 'core' ? ' selected' : '') + '>Strongest core skills</option></select>' +
+    '</div></div>' + upload +
+    '<div class="legend"><span class="lab">Core skills</span><span class="k"><span class="sw c-strong"></span>Strong</span><span class="k"><span class="sw c-partial"></span>Partial</span><span class="k"><span class="sw c-none"></span>No evidence</span>' +
+    '<span class="break"></span><span class="lab">Complementary</span><span class="k"><span class="sw n-strong"></span>Strong</span><span class="k"><span class="sw n-partial"></span>Partial</span><span class="k"><span class="sw n-none"></span>No evidence</span>' +
+    '<span class="break"></span><span class="pill gap">Team gap</span> fewer people than the team rule · <span class="pill cust">Client ×2</span> a priority for that many top clients</div>' +
+    '<div class="card" style="padding:0"><div class="scroll"><div class="grid">' +
+    '<div class="grow-row groups"><div></div><div class="grp" style="grid-column: span 5">Core skills</div><div></div><div class="grp nice" style="grid-column: span 3">Complementary skills</div><div></div><div></div></div>' +
+    '<div class="grow-row head"><div>Candidate</div>' + core().map(header).join('') + '<div></div>' + nice().map(header).join('') + '<div>Brings something new</div><div>Status</div></div>' +
+    rows + '</div></div></div>' + radarPreview() +
+    '<p class="foot">Scores are suggestions from CV evidence. They are checked in interview, and the hiring manager makes every decision.</p>';
+}
+
+function radarPreview() {
+  var az = S.candidates.slice().sort(function (a, b) { return a.name.localeCompare(b.name); });
+  var rc = cand(ui.radarCand) || az[0], nm = first(rc.name);
+  return '<section class="card"><div class="rolehead" style="align-items:center"><div><h2>Radar view</h2><span class="small muted">One candidate at a time against the role. Pick a name.</span></div><a class="btn" href="#c-' + rc.id + '">Open ' + esc(nm) + '\u2019s full profile</a></div>' +
+    '<div class="seg" role="group" aria-label="Candidate">' + az.map(function (c) { return '<button type="button" data-rc="' + c.id + '" aria-pressed="' + (c.id === rc.id) + '">' + esc(c.name) + '</button>'; }).join('') + '</div>' +
+    '<div class="legend"><span class="k"><span style="width:18px;border-top:2px dashed var(--role-line);display:inline-block"></span>What the role needs</span><span class="k"><span class="sw" style="background:var(--cand-fill);border:2px solid var(--cand)"></span>' + esc(nm) + ' (CV evidence)</span><span class="k"><span class="sw" style="background:var(--purple);border-radius:99px;width:10px;height:10px"></span>Goes beyond the role</span></div>' +
+    '<div class="radars"><div class="rpanel"><h3>Core skills <span class="small muted">· role needs strong evidence</span></h3>' + radar(core(), 'role', rc) + '</div><div class="rpanel"><h3>Complementary <span class="small muted">· role welcomes partial evidence</span></h3>' + radar(nice(), 'role', rc) + '</div></div></section>';
+}
+
+function viewCV(id) {
+  var c = cand(id);
+  if (!c) return headHTML() + navHTML('candidates') + '<div class="card"><p>That CV was not found.</p><a href="#candidates">Back to candidates</a></div>';
+  if (c.file) return headHTML() + navHTML('cv-') + '<section class="card"><h2>' + esc(c.name) + '</h2><p>This CV was uploaded as <strong>' + esc(c.file.name) + '</strong>.</p><div class="btnrow"><a class="btn primary" href="' + cvHref(c) + '" target="_blank" rel="noopener">Open the original file</a><a class="btn" href="#c-' + c.id + '">See skills match</a></div></section>';
+  var lines = skills().map(function (k) { return c.cv[k.id]; }).filter(function (t) { return !/^(Not listed|No .* listed)/.test(t); });
+  var langs = [c.ev.arabic >= 40 ? (c.cv.arabic.indexOf('Native') >= 0 ? 'Arabic (native)' : 'Arabic') : null, 'English'].filter(Boolean);
+  return headHTML() + navHTML('cv-') +
+    '<div class="btnrow" style="justify-content:space-between;align-items:center"><a href="#candidates" style="font-weight:600;text-decoration:none">← Back to candidates</a><a class="btn" href="#c-' + c.id + '">See skills match</a></div>' +
+    '<div class="callout info small">Sample CV (fictional). For uploaded candidates, View CV opens the original file.</div>' +
+    '<article class="cvdoc"><div><h1>' + esc(c.name) + '</h1><p class="muted">' + esc(c.headline) + ' · ' + esc(c.location) + ' · [sample CV: contact details left out]</p></div>' +
+    '<section style="display:flex;flex-direction:column;gap:8px"><h2>Experience</h2>' + c.jobs.map(function (j, i) { return '<div><strong>' + esc(j[0]) + '</strong>, ' + esc(j[1]) + ' <span class="muted">· ' + esc(j[2]) + '</span>' + (i === 0 ? '<ul style="margin-top:6px">' + lines.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' : '') + '</div>'; }).join('') + '</section>' +
+    '<section style="display:flex;flex-direction:column;gap:8px"><h2>Highlights</h2><ul>' + c.extras.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></section>' +
+    '<section style="display:flex;flex-direction:column;gap:8px"><h2>Languages</h2><p>' + esc(langs.join(', ')) + '</p></section></article>';
+}
+
+function viewCandidate(id) {
+  var c = cand(id);
+  if (!c) return headHTML() + navHTML('candidates') + '<div class="card"><p>That candidate was not found.</p><a href="#candidates">Back to candidates</a></div>';
+  var nm = first(c.name);
+  var learn = core().filter(function (k) { return c.ev[k.id] < 70; });
+  var bring = fills(c);
+  var coachText = learn.map(function (k) { var s = mentorsFor(k.id).map(function (m) { return first(m.name); }).slice(0, 2); return low(k) + (s.length ? ' (mentors: ' + joinList(s) + ')' : ' (no mentor set yet)'); });
+  var ready = learn.length === 0;
+  var adds = c.extras.map(function (x) { return '<li>' + esc(x) + '</li>'; });
+  bring.forEach(function (k) { var pc = priorityClients(k.id).map(function (x) { return x.name; }); adds.push('<li><strong>Fills a team gap:</strong> ' + esc(k.name) + ' (' + teamCount(k.id) + ' of ' + need(k) + ' needed today)' + (pc.length ? ', a priority for ' + esc(joinList(pc)) : '') + '.</li>'); });
+  var checks = core().filter(function (k) { var v = c.ev[k.id]; return v >= 40 && v < 70; }).map(function (k) { return '<li>Depth of ' + esc(low(k)) + ': ' + esc(c.cv[k.id]) + '</li>'; });
+  bring.slice(0, 2).forEach(function (k) { checks.push('<li>Real outcomes behind ' + esc(low(k)) + '</li>'); });
+  var actions = '<a class="btn" href="' + cvHref(c) + '"' + cvTarget(c) + '>View CV</a>' + (c.file ? '<button class="btn" type="button" data-act="rescore">' + (ui.busy === 'rescore' ? 'Reading…' : 'Re-read CV with AI') + '</button>' : '');
+  if (c.status === 'review') actions += '<button class="btn" type="button" data-status="rejected">Not progressing</button><button class="btn primary" type="button" data-status="interview">Move to interview</button>';
+  else if (c.status === 'interview') actions += '<button class="btn" type="button" data-status="rejected">Not progressing</button><button class="btn primary" type="button" data-status="hired">Hire</button>';
+  else if (c.status === 'rejected') actions += '<a class="btn" href="#rejections">Review rejection message</a><button class="btn" type="button" data-status="review">Move back to review</button>';
+  else actions += '<a class="btn primary" href="#plan">Open onboarding plan</a>';
+  var team = ui.radarView === 'team';
+  var radars = '<div class="radars"><div class="rpanel"><h3>Core skills <span class="small muted">· ' + (team ? 'need ' + S.role.coreTarget + ' people each' : 'role needs strong evidence') + '</span></h3>' + radar(core(), ui.radarView, c) + '</div>' +
+    '<div class="rpanel"><h3>Complementary <span class="small muted">· ' + (team ? 'need ' + S.role.niceTarget + ' people each' : 'role welcomes partial evidence') + '</span></h3>' + radar(nice(), ui.radarView, c) + '</div></div>';
+  var legend = team
+    ? '<div class="callout info"><strong>Future version.</strong> A TEAM gap goes beyond this hire: the team owns it and closes it over time through training, mentoring or a later hire.</div>' +
+      '<div class="legend"><span class="k"><span class="sw" style="background:var(--pink)"></span>Still missing (core)</span><span class="k"><span class="sw" style="background:var(--pink-soft)"></span>Still missing (complementary)</span><span>Each ring is one person · pink shows how many people short the team would still be with ' + esc(nm) + '</span></div>'
+    : '<div class="legend"><span class="k"><span style="width:18px;border-top:2px dashed var(--role-line);display:inline-block"></span>What the role needs</span><span class="k"><span class="sw" style="background:var(--cand-fill);border:2px solid var(--cand)"></span>' + esc(nm) + ' (CV evidence)</span><span class="k"><span class="sw" style="background:var(--purple);border-radius:99px;width:10px;height:10px"></span>Goes beyond the role</span></div>';
+  var missing = skills().filter(function (k) { return teamCount(k.id) + (c.ev[k.id] >= 70 ? 1 : 0) < need(k); }).map(low);
+  var teamNote = team ? '<div class="callout pink">' + (missing.length ? 'With ' + esc(nm) + ', the team would still be short on ' + esc(joinList(missing)) + '.' : 'No pink: with ' + esc(nm) + ', every skill meets the team rule.') + '</div>' : '';
+  var ev = skills().map(function (k) { return '<div class="evitem"><span>' + esc(k.name) + '</span><div class="cell ' + cellClass(c.ev[k.id], k.core) + '">' + LVL[lvl(c.ev[k.id])] + '</div><span class="q muted">' + esc(c.cv[k.id]) + '</span></div>'; }).join('');
+  return headHTML() + navHTML('c-') +
+    '<a href="#candidates" style="font-weight:600;text-decoration:none">← Back to candidates</a>' +
+    '<div class="rolehead"><div><h1>' + esc(c.name) + '</h1><span class="small muted">' + esc(c.headline) + ' · applied ' + esc(c.applied) + '</span>' +
+    '<div class="btnrow"><span class="pill ' + c.status + '">' + STATUS[c.status] + '</span>' + (bring.length ? '<span class="pill new">Brings something new</span>' : '') + (ready ? '<span class="pill interview">Ready faster</span>' : '') + '</div></div>' +
+    '<div class="btnrow">' + actions + '</div></div>' +
+    '<div class="row"><div class="grow"><section class="card"><div class="rolehead" style="align-items:center"><h2>' + (team ? 'Team gap: what would still be missing' : 'How ' + esc(nm) + ' matches the role') + '</h2>' +
+    '<div class="seg" role="group" aria-label="Chart view"><button type="button" data-radar="role" aria-pressed="' + (!team) + '">' + esc(nm) + ' vs the role</button><button type="button" data-radar="team" aria-pressed="' + team + '">Team gap · future</button></div></div>' +
+    legend + radars + teamNote + '</section>' +
+    '<section class="card"><h2>Evidence from the CV</h2><p class="small muted">Each score comes from a line in the CV. Check these in interview.</p><div class="evlist">' + ev + '</div></section></div>' +
+    '<div class="side"><section class="card purple"><h2>Additional skills or experience that may benefit the role</h2><ul class="clean">' + (adds.join('') || '<li>Nothing beyond the role stood out in the CV.</li>') + '</ul></section>' +
+    '<section class="card"><h2>Ready faster or something new?</h2><p>' + (ready ? esc(nm) + ' shows strong evidence on every core skill, so could be productive quickly.' : esc(nm) + ' would need mentoring on ' + esc(joinList(coachText)) + '.') + (bring.length ? ' Brings ' + esc(joinList(bring.map(low))) + ', which the team is short on.' : ' Brings little the team does not already have.') + '</p>' +
+    '<dl class="kv"><dt>To learn</dt><dd>' + esc(learn.map(function (k) { return k.short; }).join(', ') || 'Nothing core') + '</dd><dt>Could mentor on</dt><dd>' + esc(bring.map(function (k) { return k.short; }).join(', ') || '—') + '</dd><dt>Ramp-up</dt><dd>To confirm in interview</dd></dl></section>' +
+    '<section class="card"><h2>To check in interview</h2><ul class="clean">' + (checks.join('') || '<li>Confirm the strongest claims with real examples.</li>') + '</ul></section></div></div>';
+}
+
+/* ---------- 3. Team ---------- */
+function viewTeam() {
+  var opts = [[3, 'Strong'], [2, 'Partial'], [1, 'Learning']];
+  function sel(m, k) {
+    var r = rating(m, k.id);
+    return '<select aria-label="Manager view of ' + esc(m.name) + ' on ' + esc(k.name) + '" data-mgr="' + m.id + ':' + k.id + '">' + opts.map(function (o) { return '<option value="' + o[0] + '"' + (r === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select>';
+  }
+  var counts = skills().map(function (k) {
+    var n = teamCount(k.id), nd = need(k), met = n >= nd;
+    var cls = k.core ? (met ? 'c-strong' : 'c-none') : (met ? 'n-strong' : n > 0 ? 'n-partial' : 'n-none');
+    var mt = mentorsFor(k.id).length;
+    return '<div style="display:flex;flex-direction:column;gap:6px;min-width:0"><span class="xs muted" style="min-height:34px">' + esc(k.name) + (k.core ? '' : ' (complementary)') + '</span><div class="cell ' + cls + '">' + n + ' of ' + nd + ' needed</div><span class="xs muted">' + mt + ' mentor' + (mt === 1 ? '' : 's') + '</span></div>';
+  }).join('');
+  var cards = S.team.map(function (m) {
+    var strong = skills().filter(function (k) { return rating(m, k.id) === 3; });
+    var mentorChips = strong.map(function (k) { var on = m.mentor.skills.indexOf(k.id) >= 0; return '<label class="chip' + (on ? ' on' : '') + '" for="mt-' + m.id + '-' + k.id + '"><input type="checkbox" id="mt-' + m.id + '-' + k.id + '" data-mentorskill="' + m.id + ':' + k.id + '"' + (on ? ' checked' : '') + (m.mentor.willing ? '' : ' disabled') + '>' + esc(k.short) + '</label>'; }).join('');
+    return '<section class="card"><div><h3>' + esc(m.name) + '</h3><span class="small muted">' + esc(m.title) + '</span></div>' +
+      '<div class="mrow xs muted" style="font-weight:600"><span>Skill</span><span class="selfp">Self</span><span>Manager view</span></div>' +
+      skills().map(function (k) { var s = m.self[k.id]; var adj = m.mgr[k.id] != null && m.mgr[k.id] !== s; return '<div class="mrow' + (adj ? ' adj' : '') + '"><span>' + esc(k.name) + (adj ? ' <span class="pill new" style="font-size:10px">Adjusted</span>' : '') + '</span><span class="selfp">' + ['', 'Learning', 'Partial', 'Strong'][s] + '</span>' + sel(m, k) + '</div>'; }).join('') +
+      '<label class="f" for="note-' + m.id + '">Manager context<textarea id="note-' + m.id + '" rows="2" data-note="' + m.id + '">' + esc(m.note) + '</textarea></label>' +
+      '<div class="mentor"><label class="check" for="mw-' + m.id + '"><input type="checkbox" id="mw-' + m.id + '" data-mentorwilling="' + m.id + '"' + (m.mentor.willing ? ' checked' : '') + '><strong>Possible mentor for the new hire</strong></label>' +
+      (m.mentor.willing ? (strong.length ? '<span class="xs muted">Can mentor on (from their strong skills):</span><div class="chips">' + mentorChips + '</div>' : '<span class="xs muted">No strong skills yet to mentor on.</span>') : '<span class="xs muted">Not mentoring for this hire.</span>') + '</div></section>';
+  }).join('');
+  return headHTML() + navHTML('team') +
+    '<div class="rolehead"><div><h2>Team</h2><span class="small muted">Each person rated themselves in a 10-minute check-in. The manager can adjust a rating, add context and choose mentors. Changes update every screen.</span></div></div>' +
+    '<section class="card"><h3>Team rule</h3><p class="small muted">How many people on the team should be strong in each skill. Anything below this is a team gap.</p><div class="fgrid">' +
+    '<label class="f" for="r-ct">Core skills: people needed<input type="number" id="r-ct" min="1" max="' + (S.team.length + 1) + '" data-role="coreTarget" value="' + S.role.coreTarget + '"></label>' +
+    '<label class="f" for="r-nt">Complementary skills: people needed (primary, backup, tertiary)<input type="number" id="r-nt" min="1" max="' + (S.team.length + 1) + '" data-role="niceTarget" value="' + S.role.niceTarget + '"></label></div></section>' +
+    '<section class="card"><h3>Team radar</h3><div class="legend"><span class="k"><span class="sw" style="background:var(--pink)"></span>Gap against the team rule</span><span class="k"><span class="sw" style="background:#CBD5E1;border:2px solid #475569"></span>People strong today</span><span>Each ring is one person · outer ring = the whole team of ' + S.team.length + '</span></div>' +
+    '<div class="radars"><div class="rpanel"><h3>Core skills <span class="small muted">· need ' + S.role.coreTarget + ' people each</span></h3>' + radar(core(), 'teamonly', { ev: {} }) + '</div><div class="rpanel"><h3>Complementary <span class="small muted">· need ' + S.role.niceTarget + ' people each</span></h3>' + radar(nice(), 'teamonly', { ev: {} }) + '</div></div>' +
+    '<p class="small muted">If no pink shows on a skill, the team meets the rule. Pink is a TEAM gap: something to close through hiring, training or mentoring.</p></section>' +
+    '<section class="card"><h3>People strong in each skill</h3><div class="scroll"><div style="display:grid;grid-template-columns:repeat(8,minmax(104px,1fr));gap:8px;min-width:870px">' + counts + '</div></div></section>' +
+    '<div class="members">' + cards + '</div>';
+}
+
+/* ---------- 4. Customer insights ---------- */
+function viewInsights() {
+  if (!ui.client || !client(ui.client)) ui.client = S.clients[0].id;
+  var cl = client(ui.client), sv = cl.survey;
+  function pair(arr, key, i, label) { var x = arr[i] || { what: '', why: '' }; return '<div class="fgrid"><label class="f" for="' + key + 'w' + i + '">' + label + '<input type="text" id="' + key + 'w' + i + '" data-sv="' + key + ':' + i + ':what" value="' + esc(x.what) + '"></label><label class="f" for="' + key + 'y' + i + '">Why<input type="text" id="' + key + 'y' + i + '" data-sv="' + key + ':' + i + ':why" value="' + esc(x.why) + '"></label></div>'; }
+  var tabs = '<div class="seg" role="group" aria-label="Client">' + S.clients.map(function (c) { return '<button type="button" data-cl="' + c.id + '" aria-pressed="' + (c.id === cl.id) + '">' + logo(c, true) + esc(c.name) + '</button>'; }).join('') + '</div>';
+  var summary = skills().filter(function (k) { return isPriority(k.id); }).map(function (k) { var pc = priorityClients(k.id); return '<li><strong>' + esc(k.name) + '</strong>: ' + esc(pc.map(function (c) { return c.name; }).join(', ')) + (isGap(k) ? ' <span class="pill gap">Team gap</span>' : '') + '</li>'; }).join('');
+  return headHTML() + navHTML('insights') +
+    '<div class="rolehead"><div><h2>Customer insights</h2><span class="small muted">A short survey per client, filled in by its account team. No CRM access is needed.</span></div></div>' + tabs +
+    '<div class="row"><div class="grow"><section class="card"><div class="top" style="display:flex;gap:12px;align-items:center">' + logo(cl) + '<div><h3>' + esc(cl.name) + '</h3><span class="small muted">' + esc(cl.industry) + '</span></div></div>' +
+    '<h3>What does this client need beyond the job description?</h3>' +
+    [0, 1, 2].map(function (i) { return '<label class="f" for="need' + i + '">Need ' + (i + 1) + '<input type="text" id="need' + i + '" data-need="' + i + '" value="' + esc(sv.needs[i] || '') + '"' + (sv.needs[i] ? '' : ' placeholder="Optional"') + '></label>'; }).join('') + '</section>' +
+    '<section class="card"><h3>Recent win</h3>' + pair(sv.wins, 'wins', 0, 'What happened') + '</section>' +
+    '<section class="card"><h3>Recent challenge</h3>' + pair(sv.challenges, 'challenges', 0, 'What happened') + '</section></div>' +
+    '<div class="side"><section class="card"><h3>Which skills matter most to ' + esc(cl.name) + '?</h3><p class="small muted">Ticked skills get a "Client" tag on the candidate screens.</p>' +
+    skills().map(function (k) { return '<label class="check" for="pr-' + k.id + '"><input type="checkbox" id="pr-' + k.id + '" data-prio="' + k.id + '"' + (sv.priorities.indexOf(k.id) >= 0 ? ' checked' : '') + '>' + esc(k.name) + '</label>'; }).join('') +
+    '</section><section class="card"><h3>Across all top clients</h3><ul class="clean small">' + (summary || '<li>No priorities ticked yet.</li>') + '</ul></section>' +
+    '<div class="callout info small">Later version: add a view from industry news and trends for each client.</div></div></div>';
+}
+
+/* ---------- 5. Rejection review ---------- */
+function reasonSkill(c) { return core().slice().sort(function (a, b) { return c.ev[a.id] - c.ev[b.id]; })[0]; }
+function letterState(c) { if (!S.letters[c.id]) S.letters[c.id] = { type: 'level', custom: null, strength: false, approved: false }; return S.letters[c.id]; }
+function autoDraft(c, L) {
+  var k = reasonSkill(c), r = S.role.title;
+  if (L.type === 'more') return 'Thank you for applying for the ' + r + ' role. We chose a candidate whose CV showed deeper experience in ' + low(k) + ', including ' + k.good + ', which this role needs to be successful.';
+  return 'Thank you for applying for the ' + r + ' role. Based on the CV you shared, your experience in ' + low(k) + ' wasn’t yet at the level this role needs to be successful. We’re looking for a track record of ' + k.good + '.';
+}
+function draftChecks(c, text) {
+  var k = reasonSkill(c), t = text.toLowerCase();
+  var namesSkill = t.indexOf(k.name.toLowerCase()) >= 0;
+  var others = core().filter(function (x) { return x.id !== k.id && t.indexOf(x.name.toLowerCase()) >= 0; }).length;
+  var years = /\b\d+\s*\+?\s*(years?|yrs)\b|years of experience|too (young|old)|junior|senior enough/i.test(text);
+  return [
+    [namesSkill && others === 0, namesSkill && others === 0 ? 'Names one core skill' : 'Should name one core skill only'],
+    [!years, years ? 'Mentions years or age-linked words' : 'Level of experience, not years'],
+    [true, 'Asks the candidate to opt in']
+  ];
+}
+function checksHTML(chk) { return chk.map(function (x) { return '<li class="pill ' + (x[0] ? 'ok' : 'bad') + '">' + (x[0] ? '✓ ' : '! ') + esc(x[1]) + '</li>'; }).join(''); }
+function viewRejections() {
+  var rej = S.candidates.filter(function (c) { return c.status === 'rejected'; }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+  if (!rej.length) return headHTML() + navHTML('rejections') + '<section class="card"><h2>No one is marked "Not progressing"</h2><p>Mark a candidate as not progressing from their page, and their draft message appears here.</p><a href="#candidates">Go to candidates</a></section>';
+  if (!ui.rejSel || !rej.some(function (c) { return c.id === ui.rejSel; })) ui.rejSel = rej[0].id;
+  var c = cand(ui.rejSel), L = letterState(c), nm = first(c.name), k = reasonSkill(c);
+  var text = L.custom != null ? L.custom : autoDraft(c, L);
+  var chk = draftChecks(c, text), allOk = chk.every(function (x) { return x[0]; });
+  var top = S.candidates.filter(function (x) { return x.status !== 'rejected'; }).sort(function (a, b) { return coreScore(b) - coreScore(a); }).slice(0, 2);
+  var cmp = '<div class="cmprow xs muted" style="font-weight:600"><div>Core skill</div><div>Role needs</div><div style="color:var(--fg)">' + esc(nm) + '</div>' + top.map(function (t) { return '<div>' + esc(first(t.name)) + '</div>'; }).join('') + '</div>' +
+    core().map(function (s) {
+      return '<div class="cmprow' + (s.id === k.id ? ' reason' : '') + '"><div style="display:flex;gap:8px;align-items:center;font-weight:600;font-size:13px">' + esc(s.name) + (s.id === k.id ? ' <span class="pill" style="background:var(--fg);color:var(--bg)">Reason</span>' : '') + '</div>' +
+        '<div class="cell needcell">Strong</div>' + [c].concat(top).map(function (x) { return '<div class="cell ' + cellClass(x.ev[s.id], true) + '">' + LVL[lvl(x.ev[s.id])] + '</div>'; }).join('') + '</div>';
+    }).join('');
+  var list = rej.map(function (x) { var l = letterState(x); return '<button class="item" type="button" data-rej="' + x.id + '" aria-current="' + (x.id === c.id) + '"><span style="font-weight:600">' + esc(x.name) + '</span><span class="pill ' + (l.approved ? 'ok' : 'warn') + '">' + (l.approved ? 'Approved' : 'Draft ready') + '</span></button>'; }).join('');
+  return headHTML() + navHTML('rejections') +
+    '<div class="row"><aside class="card rlist"><h3 class="small muted">Not progressing (' + rej.length + ')</h3>' + list + '<p class="xs muted">Each message is approved one by one. Nothing is sent automatically.</p></aside>' +
+    '<div class="grow"><section class="card"><div class="rolehead" style="align-items:center"><h2>' + esc(c.name) + '</h2><div class="btnrow" style="align-items:center"><span class="small muted">Applied ' + esc(c.applied) + '</span><a class="btn sm" href="' + cvHref(c) + '"' + cvTarget(c) + '>View CV</a></div></div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px"><span class="small muted" style="font-weight:600">Type of reason</span><div class="seg" role="group" aria-label="Type of reason"><button type="button" data-ltype="level" aria-pressed="' + (L.type === 'level') + '">Experience not at the level needed</button><button type="button" data-ltype="more" aria-pressed="' + (L.type === 'more') + '">Someone had deeper experience</button></div></div>' +
+    '<div class="btnrow" style="align-items:center"><button class="btn" type="button" data-act="aiReject"' + (AI.ready && ui.busy !== 'reject' ? '' : ' disabled') + '>' + (ui.busy === 'reject' ? 'Drafting…' : 'Draft with AI') + '</button><span class="xs muted">' + esc(L.source === 'ai' ? 'Drafted by the local AI. The checks below still apply.' : (L.note || 'Suggested wording from the house template.')) + '</span></div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px"><label class="small muted" style="font-weight:600" for="draft">What ' + esc(nm) + ' will read (you can edit the middle)</label>' +
+    '<div class="letter"><span>Dear ' + esc(nm) + ',</span><textarea id="draft" rows="4" data-draft="1">' + esc(text) + '</textarea>' +
+    (L.strength ? '<span>' + esc(c.strength) + '</span>' : '') +
+    '<span>If you’d like us to keep your details for future roles that may suit you, <a href="#rejections" data-act="noop">opt in here</a>. If you don’t, we’ll delete them once this role is filled.</span><span>Thank you for your time and interest.</span></div>' +
+    '<label class="check" for="strength"><input type="checkbox" id="strength" data-act="strength"' + (L.strength ? ' checked' : '') + '>Add one strength we noticed (optional)</label>' +
+    (L.custom != null ? '<button class="btn ghost" type="button" data-act="resetDraft" style="align-self:flex-start">Go back to the suggested wording</button>' : '') + '</div>' +
+    '<ul class="checks" aria-label="Checks on this message" id="checks">' + checksHTML(chk) + '</ul>' +
+    (L.approved ? '<div class="callout ok" role="status"><strong>Approved and copied.</strong> Paste it into your own email to ' + esc(c.name) + '. The app does not send email. Replace the opt-in link with your own form or reply address.</div>' : '') +
+    '<div class="btnrow" style="justify-content:flex-end"><button class="btn ' + (L.approved ? 'done' : 'primary') + '" type="button" data-act="approve"' + (allOk ? '' : ' disabled') + '>' + (L.approved ? 'Approved' : 'Approve message') + '</button></div></section>' +
+    '<section class="card"><div><h2>Why: core skills against the higher-fit candidates</h2><span class="small muted">For the manager only. ' + esc(nm) + ' does not see this.</span></div><div class="scroll"><div class="cmpgrid">' + cmp + '</div></div></section>' +
+    '<section class="card purple"><h2>Worth knowing for the future</h2><p>' + esc(c.extras.join('. ')) + '.</p><p class="small">' + esc(nm) + ' is added to the "people worth knowing" pool only if they opt in from the message. Nothing is kept by default.</p></section></div></div>';
+}
+
+/* ---------- 6. First 90 days ---------- */
+function planFor(c) {
+  var learn = core().filter(function (k) { return c.ev[k.id] < 70; });
+  var bring = fills(c);
+  var execLead = mentorsFor('exec')[0];
+  var names = S.clients.map(function (x) { return x.name; });
+  var d30 = ['Meet the account teams for ' + joinList(names) + ', and read each client’s insights.'];
+  learn.slice(0, 2).forEach(function (k) { var co = mentorsFor(k.id)[0]; d30.push((co ? 'Pair with ' + co.name : 'Find a mentor') + ' on ' + low(k) + ': shadow two pieces of their work.'); });
+  if (execLead) d30.push('Join two client meetings led by ' + execLead.name + '.');
+  var d60 = ['Lead a discovery session with ' + S.clients[0].name + ', with a mentor observing and giving feedback.'];
+  bring.slice(0, 2).forEach(function (k) { var me = notStrongIn(k.id).map(function (m) { return first(m.name); }).slice(0, 2); d60.push('Start fortnightly sessions teaching ' + low(k) + (me.length ? ' to ' + joinList(me) : '') + '.'); });
+  learn.slice(0, 1).forEach(function (k) { d60.push('Deliver one piece of ' + low(k) + ' work with a mentor reviewing it.'); });
+  var d90 = ['Own one ' + S.clients[0].name + ' workstream end to end.'];
+  bring.slice(0, 1).forEach(function (k) { d90.push('Run a team session on ' + low(k) + '.'); });
+  d90.push('Review progress' + (learn.length ? ' on ' + joinList(learn.map(low)) : '') + ' with the manager and agree the next steps.');
+  return { cand: c.id, d30: d30, d60: d60, d90: d90, approved: false };
+}
+function viewPlan() {
+  var pool = S.candidates.filter(function (c) { return c.status !== 'rejected'; }).sort(function (a, b) { return a.name.localeCompare(b.name); });
+  if (!pool.length) return headHTML() + navHTML('plan') + '<section class="card"><p>No candidates are in review, interview or hired.</p></section>';
+  var hired = pool.find(function (c) { return c.status === 'hired'; });
+  if (!S.plan || !cand(S.plan.cand) || cand(S.plan.cand).status === 'rejected') S.plan = planFor(hired || cand('priya') || pool[0]);
+  var c = cand(S.plan.cand), P = S.plan, nm = first(c.name);
+  function phase(key, title, sub) {
+    return '<section class="card phase"><h3>' + title + ' <span class="small muted">' + sub + '</span></h3>' + P[key].map(function (t, i) { return '<label class="f" for="' + key + '-' + i + '"><span class="xs">Item ' + (i + 1) + '</span><textarea id="' + key + '-' + i + '" data-plan="' + key + ':' + i + '">' + esc(t) + '</textarea></label>'; }).join('') +
+      '<button class="btn ghost sm" type="button" data-addplan="' + key + '" style="align-self:flex-start">Add an item</button></section>';
+  }
+  return headHTML() + navHTML('plan') +
+    '<div class="rolehead"><div><h2>Onboarding</h2><span class="small muted">A 30-60-90 day plan drafted from the skills to learn, the skills ' + esc(nm) + ' brings, the mentors chosen on the Team tab, and the customer insights. Edit anything, then approve.</span></div>' +
+    '<div class="btnrow" style="align-items:center"><label class="small muted" for="planFor">Plan for</label><select id="planFor" data-bind="planFor" style="width:auto">' + pool.map(function (x) { return '<option value="' + x.id + '"' + (x.id === c.id ? ' selected' : '') + '>' + esc(x.name) + ' · ' + STATUS[x.status] + '</option>'; }).join('') + '</select>' +
+    '<button class="btn" type="button" data-act="redraft">Rules draft</button><button class="btn primary" type="button" data-act="aiPlan"' + (AI.ready && ui.busy !== 'plan' ? '' : ' disabled') + '>' + (ui.busy === 'plan' ? 'Drafting…' : 'Draft with AI') + '</button></div></div>' + (P.note ? '<div class="callout info small">' + esc(P.note) + '</div>' : '') +
+    (c.status !== 'hired' ? '<div class="callout info small">' + esc(c.name) + ' is not hired yet. This is a preview of the plan they would get.</div>' : '') +
+    '<div class="plan">' + phase('d30', 'Days 1–30', 'Learn the clients and the team') + phase('d60', 'Days 31–60', 'Contribute with support') + phase('d90', 'Days 61–90', 'Own work and share strengths') + '</div>' +
+    (P.approved ? '<div class="callout ok" role="status"><strong>Plan approved.</strong> Share it with ' + esc(nm) + ' and their mentors.</div>' : '') +
+    '<div class="btnrow" style="justify-content:flex-end"><button class="btn ' + (P.approved ? 'done' : 'primary') + '" type="button" data-act="approvePlan">' + (P.approved ? 'Approved' : 'Approve plan') + '</button></div>' + mentorsHTML(c);
+}
+
+/* mentoring: manager pairs, email goes to both, reminder after 30 days */
+function pairs() { if (!S.mentorships) S.mentorships = []; return S.mentorships; }
+function pairing(cid, mid) { return pairs().find(function (x) { return x.cand === cid && x.mentor === mid; }); }
+function fmtDate(d) { return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }); }
+function plusDays(iso, n) { var d = new Date(iso); d.setDate(d.getDate() + n); return d; }
+function emailText(c, m, ms) {
+  var nm = first(c.name), mn = first(m.name);
+  var focus = ms.focus.map(function (id) { return low(skill(id)); });
+  return 'To: ' + m.name + ', ' + c.name + '\nSubject: Mentoring during onboarding: ' + nm + ' and ' + mn + '\n\n' +
+    'Hi ' + mn + ' and ' + nm + ',\n\n' +
+    'I\u2019d like ' + mn + ' to mentor ' + nm + ' during onboarding. Please focus on ' + (focus.length ? joinList(focus) : '[choose at least one focus area]') + '.' +
+    (ms.note ? '\n\n' + ms.note : '') +
+    '\n\nCould you set up a first session in the next two weeks? In 30 days I\u2019ll ask ' + mn + ' for a short update on how it\u2019s going.\n\nThanks,\n[Hiring manager]';
+}
+function mentorsHTML(c) {
+  var nm = first(c.name);
+  var learn = core().filter(function (k) { return c.ev[k.id] < 70; }).map(function (k) { return k.id; });
+  var pool = S.team.filter(function (m) { return m.mentor.willing && m.mentor.skills.length; });
+  var cards = pool.map(function (m) {
+    var ms = pairing(c.id, m.id);
+    var can = m.mentor.skills.map(function (id) { return skill(id).short; }).join(', ');
+    var body = '<label class="check" for="pair-' + m.id + '"><input type="checkbox" id="pair-' + m.id + '" data-pair="' + m.id + '"' + (ms ? ' checked' : '') + '><span>Pair <strong>' + esc(m.name) + '</strong> with ' + esc(nm) + '</span></label>' +
+      '<span class="xs muted">Can mentor on: ' + esc(can) + (m.mentor.skills.some(function (id) { return learn.indexOf(id) >= 0; }) ? ' · covers something ' + esc(nm) + ' needs to learn' : '') + '</span>';
+    if (ms) {
+      body += '<span class="small muted" style="font-weight:600">What should ' + esc(nm) + ' focus on with ' + esc(first(m.name)) + '?</span><div class="chips">' +
+        m.mentor.skills.map(function (id) { var on = ms.focus.indexOf(id) >= 0; return '<label class="chip' + (on ? ' on' : '') + '" for="fo-' + m.id + '-' + id + '"><input type="checkbox" id="fo-' + m.id + '-' + id + '" data-focus="' + m.id + ':' + id + '"' + (on ? ' checked' : '') + (ms.sent ? ' disabled' : '') + '>' + esc(skill(id).short) + '</label>'; }).join('') + '</div>' +
+        '<label class="f" for="mn-' + m.id + '">Anything to add (optional)<textarea id="mn-' + m.id + '" rows="2" data-mnote="' + m.id + '"' + (ms.sent ? ' disabled' : '') + '>' + esc(ms.note) + '</textarea></label>' +
+        '<div class="letter" style="font-size:13px;white-space:pre-wrap" id="mail-' + m.id + '">' + esc(emailText(c, m, ms)) + '</div>' +
+        (ms.sent
+          ? '<div class="callout ok small" role="status"><strong>Email copied</strong> on ' + esc(fmtDate(new Date(ms.sent))) + '. Paste it into your own email to ' + esc(first(m.name)) + ' and ' + esc(nm) + '. Reminder set for <strong>' + esc(fmtDate(plusDays(ms.sent, 30))) + '</strong>: ' + esc(first(m.name)) + ' will be asked for a short update.</div>'
+          : '<div class="btnrow" style="justify-content:flex-end"><button class="btn primary" type="button" data-send="' + m.id + '"' + (ms.focus.length ? '' : ' disabled') + '>Copy email and mark as sent</button></div>');
+    }
+    return '<section class="card' + (ms ? '' : '') + '">' + body + '</section>';
+  }).join('');
+  var sent = pairs().filter(function (x) { return x.cand === c.id && x.sent; });
+  var reminders = sent.length ? '<section class="card"><h3>Follow-up reminders</h3><ul class="clean small">' + sent.map(function (x) { var m = S.team.find(function (t) { return t.id === x.mentor; }); var due = plusDays(x.sent, 30) <= new Date(); return '<li>' + (due ? '<span class="pill warn">Due</span> ' : '') + '<strong>' + esc(fmtDate(plusDays(x.sent, 30))) + '</strong> · Ask ' + esc(m.name) + ' for an update on ' + esc(nm) + ' (focus: ' + esc(joinList(x.focus.map(function (id) { return low(skill(id)); }))) + ')</li>'; }).join('') + '</ul><p class="xs muted">The reminder asks the mentor: "How is ' + esc(nm) + ' getting on? Reply with two or three lines." Reminders show here; when one is due, ask the mentor for their update.</p></section>' : '';
+  return '<div class="rolehead" style="margin-top:8px"><div><h2>Mentors for ' + esc(nm) + '</h2><span class="small muted">Choose from the possible mentors set on the Team tab. Ticking a mentor drafts an email to both people with the focus areas you pick.</span></div></div>' +
+    (pool.length ? '<div class="members">' + cards + '</div>' : '<section class="card"><p>No possible mentors yet. Set them on the <a href="#team">Team</a> tab.</p></section>') + reminders;
+}
+
+/* ---------- render + events ---------- */
+var app = document.getElementById('app');
+function render() {
+  var r = route(), html;
+  if (r.indexOf('cv-') === 0) html = viewCV(r.slice(3));
+  else if (r.indexOf('c-') === 0) html = viewCandidate(r.slice(2));
+  else if (r === 'candidates') html = viewCandidates();
+  else if (r === 'team') html = viewTeam();
+  else if (r === 'insights') html = viewInsights();
+  else if (r === 'rejections') html = viewRejections();
+  else if (r === 'plan') html = viewPlan();
+  else html = viewRole();
+  app.innerHTML = html + '<p class="foot">Runs on this computer. CVs and data stay here, and the AI model runs locally through Ollama. Nothing is emailed or sent anywhere. "Reset sample data" deletes uploaded CVs and starts over.</p>';
+  save();
+}
+
+var COLORS = ['#1D4ED8', '#0F766E', '#B45309', '#9F1239', '#4338CA', '#0369A1'];
+document.addEventListener('click', function (e) {
+  if (e.target.closest('a[href]') && !e.target.closest('[data-act]')) return;
+  var t = e.target.closest('[data-act],[data-open],[data-status],[data-radar],[data-rej],[data-ltype],[data-add],[data-addplan],[data-cl],[data-rmclient],[data-send],[data-rc]');
+  if (!t) return;
+  var d = t.dataset, r = route();
+  if (d.open) { go('c-' + d.open); return; }
+  if (d.status) { var c = cand(r.slice(2)); c.status = d.status; if (d.status === 'rejected') ui.rejSel = c.id; if (d.status === 'hired') { S.candidates.forEach(function (x) { if (x !== c && x.status === 'hired') x.status = 'interview'; }); S.plan = planFor(c); } render(); return; }
+  if (d.radar) { ui.radarView = d.radar; render(); return; }
+  if (d.rej) { ui.rejSel = d.rej; render(); return; }
+  if (d.rc) { ui.radarCand = d.rc; render(); return; }
+  if (d.cl) { ui.client = d.cl; render(); return; }
+  if (d.send) { var mp = pairing(S.plan.cand, d.send); if (mp && mp.focus.length) { copyText(emailText(cand(S.plan.cand), S.team.find(function (x) { return x.id === d.send; }), mp)); mp.sent = new Date().toISOString(); } render(); return; }
+  if (d.rmclient) { S.clients = S.clients.filter(function (x) { return x.id !== d.rmclient; }); render(); return; }
+  if (d.ltype) { var L = letterState(cand(ui.rejSel)); L.type = d.ltype; L.custom = null; L.source = null; L.note = ''; L.approved = false; render(); return; }
+  if (d.add) { var i = S.spare.findIndex(function (x) { return x.id === d.add; }); if (i >= 0) S.candidates.push(S.spare.splice(i, 1)[0]); render(); return; }
+  if (d.addplan) { S.plan[d.addplan].push(''); S.plan.approved = false; render(); return; }
+  switch (d.act) {
+    case 'reset': ui.rejSel = null; ui.uploadOpen = false; ui.client = null; clearTimeout(saveTimer); api('/api/reset', { method: 'POST' }).then(function (s) { S = s; render(); }).catch(function (er) { alertMsg(er.message); }); break;
+    case 'upload': ui.uploadOpen = true; go('candidates'); break;
+    case 'closeUpload': ui.uploadOpen = false; render(); break;
+    case 'addClient': var id = 'cl' + Date.now(); S.clients.push({ id: id, name: 'New client', industry: 'Industry', why: '', color: COLORS[S.clients.length % COLORS.length], logo: null, survey: { needs: [], wins: [], challenges: [], priorities: [] } }); render(); break;
+    case 'strength': var L2 = letterState(cand(ui.rejSel)); L2.strength = t.checked; L2.approved = false; render(); break;
+    case 'resetDraft': var L3 = letterState(cand(ui.rejSel)); L3.custom = null; L3.source = null; L3.note = ''; L3.approved = false; render(); break;
+    case 'approve': var ac = cand(ui.rejSel), AL = letterState(ac); copyText('Dear ' + first(ac.name) + ',\n\n' + (AL.custom != null ? AL.custom : autoDraft(ac, AL)) + (AL.strength ? '\n\n' + ac.strength : '') + '\n\nIf you\u2019d like us to keep your details for future roles that may suit you, please opt in here: [your opt-in link]. If you don\u2019t, we\u2019ll delete them once this role is filled.\n\nThank you for your time and interest.'); AL.approved = true; render(); break;
+    case 'redraft': S.plan = planFor(cand(S.plan.cand)); render(); break;
+    case 'approvePlan': S.plan.approved = true; render(); break;
+    case 'noop': e.preventDefault(); break;
+    case 'rescore':
+      var rc = cand(route().slice(2)); ui.busy = 'rescore'; render();
+      flushSave().then(function () { return api('/api/candidates/' + rc.id + '/rescore', { method: 'POST' }); })
+        .then(function () { ui.busy = null; return reloadState(); })
+        .catch(function (er) { ui.busy = null; render(); alertMsg(er.message); });
+      break;
+    case 'aiReject':
+      var rj = cand(ui.rejSel), LL = letterState(rj); ui.busy = 'reject'; render();
+      flushSave().then(function () { return api('/api/draft/rejection', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cand_id: rj.id, kind: LL.type }) }); })
+        .then(function (r) { ui.busy = null; LL.custom = r.text; LL.source = r.source; LL.note = r.note || ''; LL.approved = false; render(); })
+        .catch(function (er) { ui.busy = null; render(); alertMsg(er.message); });
+      break;
+    case 'aiPlan':
+      var pc = cand(S.plan.cand); ui.busy = 'plan'; render();
+      flushSave().then(function () { return api('/api/draft/plan', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cand_id: pc.id }) }); })
+        .then(function (r) { ui.busy = null; S.plan = { cand: pc.id, d30: r.plan.d30, d60: r.plan.d60, d90: r.plan.d90, approved: false, note: r.source === 'ai' ? 'Drafted by the local AI. Edit anything before approving.' : r.note }; render(); })
+        .catch(function (er) { ui.busy = null; render(); alertMsg(er.message); });
+      break;
+  }
+});
+
+document.addEventListener('input', function (e) {
+  var t = e.target, d = t.dataset;
+  if (d.note) { S.team.find(function (m) { return m.id === d.note; }).note = t.value; save(); }
+  else if (d.skill) { var k = skill(d.skill); k.name = t.value; k.short = t.value.length > 18 ? t.value.slice(0, 17) + '…' : t.value; save(); }
+  else if (d.alt != null) { S.role.altTitles[+d.alt] = t.value; save(); }
+  else if (d.client) { var p0 = d.client.split(':'); client(p0[0])[p0[1]] = t.value; save(); }
+  else if (d.role && t.type === 'text') { S.role[d.role] = t.value; save(); }
+  else if (d.need != null) { client(ui.client).survey.needs[+d.need] = t.value; save(); }
+  else if (d.sv) { var p = d.sv.split(':'); var arr = client(ui.client).survey[p[0]]; if (!arr[+p[1]]) arr[+p[1]] = { what: '', why: '' }; arr[+p[1]][p[2]] = t.value; save(); }
+  else if (d.draft) {
+    var c = cand(ui.rejSel), L = letterState(c); L.custom = t.value; L.approved = false; save();
+    var chk = draftChecks(c, t.value), box = document.getElementById('checks');
+    if (box) box.innerHTML = checksHTML(chk);
+    var btn = document.querySelector('[data-act="approve"]'); if (btn) { btn.disabled = !chk.every(function (x) { return x[0]; }); btn.className = 'btn primary'; btn.textContent = 'Approve message'; }
+  }
+  else if (d.mnote) { var c2 = cand(S.plan.cand), mm = S.team.find(function (x) { return x.id === d.mnote; }), pr = pairing(c2.id, mm.id); pr.note = t.value; save(); var el = document.getElementById('mail-' + mm.id); if (el) el.textContent = emailText(c2, mm, pr); }
+  else if (d.plan) { var q = d.plan.split(':'); S.plan[q[0]][+q[1]] = t.value; S.plan.approved = false; save(); }
+});
+
+document.addEventListener('change', function (e) {
+  var t = e.target, d = t.dataset;
+  if (d.mgr) { var p = d.mgr.split(':'); var m = S.team.find(function (x) { return x.id === p[0]; }); var v = +t.value; if (v === m.self[p[1]]) delete m.mgr[p[1]]; else m.mgr[p[1]] = v; if (v < 3) m.mentor.skills = m.mentor.skills.filter(function (s) { return s !== p[1]; }); render(); }
+  else if (d.pair) {
+    var cid = S.plan.cand, mid = d.pair, ex = pairing(cid, mid);
+    if (t.checked && !ex) { var mt = S.team.find(function (x) { return x.id === mid; }); var cc = cand(cid); var lf = mt.mentor.skills.filter(function (id) { return cc.ev[id] < 70; }); pairs().push({ cand: cid, mentor: mid, focus: lf.length ? lf : mt.mentor.skills.slice(0, 1), note: '', sent: null }); }
+    if (!t.checked && ex) S.mentorships = pairs().filter(function (x) { return x !== ex; });
+    render();
+  }
+  else if (d.focus) { var pf = d.focus.split(':'), pp = pairing(S.plan.cand, pf[0]); var fi = pp.focus.indexOf(pf[1]); if (t.checked && fi < 0) pp.focus.push(pf[1]); if (!t.checked && fi >= 0) pp.focus.splice(fi, 1); render(); }
+  else if (d.mentorwilling) { var mw = S.team.find(function (x) { return x.id === d.mentorwilling; }); mw.mentor.willing = t.checked; render(); }
+  else if (d.mentorskill) { var ps = d.mentorskill.split(':'); var ms = S.team.find(function (x) { return x.id === ps[0]; }).mentor; var ix = ms.skills.indexOf(ps[1]); if (t.checked && ix < 0) ms.skills.push(ps[1]); if (!t.checked && ix >= 0) ms.skills.splice(ix, 1); render(); }
+  else if (d.role && t.type === 'number') { S.role[d.role] = Math.max(1, Math.min(S.team.length + 1, parseInt(t.value, 10) || 1)); render(); }
+  else if (d.skill || d.client || d.alt != null || (d.role && t.type === 'text')) { render(); }
+  else if (d.logo && t.files && t.files[0]) {
+    var f = t.files[0], cl = client(d.logo);
+    if (!/^image\//.test(f.type) || f.size > 1500000) { alertMsg('Choose an image under 1.5 MB.'); return; }
+    var rd = new FileReader(); rd.onload = function () { cl.logo = rd.result; render(); }; rd.readAsDataURL(f);
+  }
+  else if (d.prio) { var arr = client(ui.client).survey.priorities; var i = arr.indexOf(d.prio); if (t.checked && i < 0) arr.push(d.prio); if (!t.checked && i >= 0) arr.splice(i, 1); render(); }
+  else if (d.cvfiles) { uploadFiles(t.files); }
+  else if (d.bind === 'sort') { ui.sort = t.value; render(); }
+  else if (d.bind === 'planFor') { S.plan = planFor(cand(t.value)); render(); }
+});
+function uploadFiles(files) {
+  if (!files || !files.length) return;
+  var fd = new FormData();
+  Array.prototype.forEach.call(files, function (f) { fd.append('files', f); });
+  ui.busy = 'upload'; ui.uploadMsg = 'Reading ' + files.length + ' CV' + (files.length > 1 ? 's' : '') + ' with the local AI…'; render();
+  flushSave().then(function () { return api('/api/cvs', { method: 'POST', body: fd }); }).then(function (r) {
+    ui.busy = null;
+    ui.uploadMsg = r.results.map(function (x) { return '<strong>' + esc(x.file) + '</strong>: ' + (x.error ? esc(x.error) : 'added ' + esc(x.name)); }).join('<br>');
+    return reloadState();
+  }).catch(function (er) { ui.busy = null; ui.uploadMsg = esc(er.message); render(); });
+}
+document.addEventListener('dragover', function (e) { var d = e.target.closest && e.target.closest('#drop'); if (d) { e.preventDefault(); d.classList.add('over'); } });
+document.addEventListener('dragleave', function (e) { var d = e.target.closest && e.target.closest('#drop'); if (d) d.classList.remove('over'); });
+document.addEventListener('drop', function (e) { var d = e.target.closest && e.target.closest('#drop'); if (!d) return; e.preventDefault(); d.classList.remove('over'); if (AI.ready && ui.busy !== 'upload') uploadFiles(e.dataTransfer.files); });
+function copyText(t) {
+  try { navigator.clipboard.writeText(t).catch(function () { alertMsg('Copying is blocked in this browser. Select the text and copy it yourself.'); }); }
+  catch (e) { alertMsg('Copying is blocked in this browser. Select the text and copy it yourself.'); }
+}
+function alertMsg(msg) { var el = document.createElement('div'); el.className = 'callout pink'; el.setAttribute('role', 'alert'); el.textContent = msg; app.prepend(el); setTimeout(function () { el.remove(); }, 4000); }
+
+pollAI();
+reloadState().catch(function (er) { app.innerHTML = '<div class="card"><h2>Cannot reach the app server</h2><p>' + esc(er.message) + '</p></div>'; });
+})();
+</script>
